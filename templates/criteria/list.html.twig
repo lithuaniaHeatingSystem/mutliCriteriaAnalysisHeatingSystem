@@ -18,7 +18,7 @@
                 <tr>
                     <th scope="col">{% trans %}criteria.list.label{% endtrans %}</th>
                     <th scope="col">{% trans %}criteria.list.description{% endtrans %}</th>
-                    <th scope="col">{% trans %}criteria.list.mesure_unit{% endtrans %}</th>
+                    <th scope="col">{% trans %}criteria.list.unit{% endtrans %}</th>
                     <th scope="col">{% trans %}criteria.list.actions{% endtrans %}</th>
                 </tr>
                 </thead>
@@ -27,7 +27,7 @@
                     <tr>
                         <th scope="row">{{ criteria.label }}</th>
                         <td>{{ criteria.description }}</td>
-                        <td>{{ criteria.mesureUnit }}</td>
+                        <td>{{ criteria.unit }}</td>
                         <td>
                             <a href="#"
                                class="badge badge-danger">{% trans %}criteria.list.action.remove{% endtrans %}</a>

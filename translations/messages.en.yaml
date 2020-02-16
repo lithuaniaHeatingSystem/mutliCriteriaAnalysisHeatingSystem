@@ -13,7 +13,7 @@ criteria:
         name: Criteria list
         label: Name
         description: Description
-        mesure_unit: Unit
+        unit: Unit
         actions: Actions
         action:
             add: Add criteria

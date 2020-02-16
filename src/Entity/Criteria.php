@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CriteriaRepository")
@@ -18,18 +19,24 @@ class Criteria
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $label;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
-    private $mesureUnit;
+    private $unit;
 
     /**
      * @return int|null
@@ -82,19 +89,19 @@ class Criteria
     /**
      * @return string|null
      */
-    public function getMesureUnit(): ?string
+    public function getUnit(): ?string
     {
-        return $this->mesureUnit;
+        return $this->unit;
     }
 
     /**
-     * @param string $mesureUnit
+     * @param string $unit
      *
      * @return $this
      */
-    public function setMesureUnit(string $mesureUnit): self
+    public function setUnit(string $unit): self
     {
-        $this->mesureUnit = $mesureUnit;
+        $this->unit = $unit;
 
         return $this;
     }
