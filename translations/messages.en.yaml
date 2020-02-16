@@ -19,3 +19,9 @@ criteria:
             add: Add criteria
             remove: Remove
             edit: Edit
+    edit:
+        title: Edit criteria
+        submit: Edit
+    add:
+        title: Create criteria
+        submit: Create
