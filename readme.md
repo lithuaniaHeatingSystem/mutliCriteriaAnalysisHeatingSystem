@@ -9,7 +9,7 @@
  
 ## Every time
  - ▶ docker-compose up -d
- - ▶ docker exec lithuania_project_node yarn dev-server --host=127.0.0.1
+ - ▶ docker exec lithuania_project_node yarn watch
 
  After that you can go to localhost:8080, enjoy
  
