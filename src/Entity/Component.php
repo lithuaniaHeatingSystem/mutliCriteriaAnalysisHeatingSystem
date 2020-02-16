@@ -40,21 +40,21 @@ class Component
     private $link;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Criteria")
-     */
-    private $criterias;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ComponentCriteria", mappedBy="component", orphanRemoval=true)
+     */
+    private $componentCriterias;
 
     /**
      * Component constructor.
      */
     public function __construct()
     {
-        $this->criterias = new ArrayCollection();
+        $this->componentCriterias = new ArrayCollection();
     }
 
     /**
@@ -126,49 +126,62 @@ class Component
     }
 
     /**
-     * @return Collection|Criteria[]
+     * @return int|null
      */
-    public function getCriterias(): Collection
-    {
-        return $this->criterias;
-    }
-
-    /**
-     * @param Criteria $criteria
-     *
-     * @return $this
-     */
-    public function addCriteria(Criteria $criteria): self
-    {
-        if (!$this->criterias->contains($criteria)) {
-            $this->criterias[] = $criteria;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Criteria $criteria
-     *
-     * @return $this
-     */
-    public function removeCriteria(Criteria $criteria): self
-    {
-        if ($this->criterias->contains($criteria)) {
-            $this->criterias->removeElement($criteria);
-        }
-
-        return $this;
-    }
-
     public function getType(): ?int
     {
         return $this->type;
     }
 
+    /**
+     * @param int $type
+     *
+     * @return $this
+     */
     public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ComponentCriteria[]
+     */
+    public function getComponentCriterias(): Collection
+    {
+        return $this->componentCriterias;
+    }
+
+    /**
+     * @param ComponentCriteria $componentCriteria
+     *
+     * @return $this
+     */
+    public function addComponentCriteria(ComponentCriteria $componentCriteria): self
+    {
+        if (!$this->componentCriterias->contains($componentCriteria)) {
+            $this->componentCriterias[] = $componentCriteria;
+            $componentCriteria->setComponent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ComponentCriteria $componentCriteria
+     *
+     * @return $this
+     */
+    public function removeComponentCriteria(ComponentCriteria $componentCriteria): self
+    {
+        if ($this->componentCriterias->contains($componentCriteria)) {
+            $this->componentCriterias->removeElement($componentCriteria);
+            // set the owning side to null (unless already changed)
+            if ($componentCriteria->getComponent() === $this) {
+                $componentCriteria->setComponent(null);
+            }
+        }
 
         return $this;
     }
