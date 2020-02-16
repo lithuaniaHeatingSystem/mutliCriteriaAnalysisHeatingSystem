@@ -2,12 +2,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
 <body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">{% trans %}menu.name {% endtrans %}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">{% trans %}menu.component{% endtrans %}<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">{% trans %}menu.criteria{% endtrans %}</a>
+                <a class="nav-item nav-link" href="#">{% trans %}menu.process{% endtrans %}</a>
+            </div>
+        </div>
+    </nav>
+</header>
 {% block body %}{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

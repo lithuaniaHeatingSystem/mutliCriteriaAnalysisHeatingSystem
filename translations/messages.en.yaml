@@ -1,0 +1,9 @@
+menu:
+    name: Heating system
+    component: Components
+    process: Processing
+    criteria: Criterias
+
+home:
+    title: HomePage
+    explain: Explain how it's work
