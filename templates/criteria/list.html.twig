@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CriteriaController!{% endblock %}
+{% block title %}{% trans %}criteria.list.title{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -8,7 +8,8 @@
             <h1>{% trans %}criteria.list.name{% endtrans %}</h1>
         </div>
         <div class="col text-md-right">
-            <a href="{{ path('criteria_add') }}" role="button" class="btn btn-success">{% trans %}criteria.list.action.add{% endtrans %}</a>
+            <a href="{{ path('criteria_add') }}" role="button"
+               class="btn btn-success">{% trans %}criteria.list.action.add{% endtrans %}</a>
         </div>
     </div>
     <div class="row">
@@ -29,11 +30,10 @@
                         <td>{{ criteria.description }}</td>
                         <td>{{ criteria.unit }}</td>
                         <td>
-                            <a href="#"
+                            <a href="{{ path('criteria_delete', {'id': criteria.id}) }}"
                                class="badge badge-danger">{% trans %}criteria.list.action.remove{% endtrans %}</a>
-                            <a href="#"
+                            <a href="{{ path('criteria_edit', {'id': criteria.id}) }}"
                                class="badge badge-secondary">{% trans %}criteria.list.action.edit{% endtrans %}</a>
-
                         </td>
                     </tr>
                 {% endfor %}

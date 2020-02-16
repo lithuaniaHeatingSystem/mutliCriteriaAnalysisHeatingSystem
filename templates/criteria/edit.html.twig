@@ -2,12 +2,12 @@
 
 {% block body %}
     <div class="row">
-        <h1>{% trans %}criteria.add.title{% endtrans %}</h1>
+        <h1>{% trans %}criteria.edit.title{% endtrans %}</h1>
     </div>
     <div class="row">
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button type="submit" class="btn  btn-success">{% trans %}criteria.add.submit{% endtrans %}</button>
+        <button type="submit" class="btn  btn-success">{% trans %}criteria.edit.submit{% endtrans %}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}
