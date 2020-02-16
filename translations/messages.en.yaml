@@ -7,3 +7,15 @@ menu:
 home:
     title: HomePage
     explain: Explain how it's work
+
+criteria:
+    list:
+        name: Criteria list
+        label: Name
+        description: Description
+        mesure_unit: Unit
+        actions: Actions
+        action:
+            add: Add criteria
+            remove: Remove
+            edit: Edit

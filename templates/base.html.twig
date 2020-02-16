@@ -19,14 +19,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">{% trans %}menu.component{% endtrans %}<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">{% trans %}menu.criteria{% endtrans %}</a>
+                <a class="nav-item nav-link active" href="#">{% trans %}menu.component{% endtrans %}<span
+                            class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{{ path('criteria_list') }}">{% trans %}menu.criteria{% endtrans %}</a>
                 <a class="nav-item nav-link" href="#">{% trans %}menu.process{% endtrans %}</a>
             </div>
         </div>
     </nav>
 </header>
+<div class="container">
 {% block body %}{% endblock %}
+</div>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
