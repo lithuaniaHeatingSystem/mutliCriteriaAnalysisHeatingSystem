@@ -9,7 +9,7 @@
  
 ## Every time
  - ▶ docker-compose up -d
- - ▶ docker exec lithuania_project_node yarn watch
+ - ▶ docker exec lithuania_project_node yarn watch (if you are error try: docker exec lithuania_project_node yarn add --dev @symfony/webpack-encore)
 
  After that you can go to localhost:8080, enjoy
  
