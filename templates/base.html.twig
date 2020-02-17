@@ -19,8 +19,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">{% trans %}menu.component{% endtrans %}<span
-                            class="sr-only">(current)</span></a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% trans %}menu.component.name{% endtrans %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">{% trans %}menu.component.heating{% endtrans %}</a>
+                        <a class="dropdown-item" href="#">{% trans %}menu.component.pipe{% endtrans %}</a>
+                        <a class="dropdown-item" href="#">{% trans %}menu.component.thermostatic_valve{% endtrans %}</a>
+                        <a class="dropdown-item" href="#">{% trans %}menu.component.differential_valve{% endtrans %}</a>
+                        <a class="dropdown-item" href="#">{% trans %}menu.component.circulation_pump{% endtrans %}</a>
+                    </div>
+                </li>
                 <a class="nav-item nav-link" href="{{ path('criteria_list') }}">{% trans %}menu.criteria{% endtrans %}</a>
                 <a class="nav-item nav-link" href="#">{% trans %}menu.process{% endtrans %}</a>
             </div>

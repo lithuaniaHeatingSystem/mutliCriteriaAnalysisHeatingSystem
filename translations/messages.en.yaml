@@ -1,6 +1,13 @@
 menu:
     name: Heating system
-    component: Components
+    component:
+        name: Components
+        heating: Heating
+        pipe: Pipe
+        thermostatic_valve: Thermostatic valve
+        differential_valve: Differential valve
+        circulation_pump: Circulation pump
+
     process: Processing
     criteria: Criterias
 
@@ -10,6 +17,7 @@ home:
 
 criteria:
     list:
+        title: Liste des critères
         name: Criteria list
         label: Name
         description: Description
