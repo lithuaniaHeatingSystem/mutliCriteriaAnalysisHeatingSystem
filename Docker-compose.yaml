@@ -31,7 +31,9 @@ services:
             - php
     encore:
         container_name: lithuania_project_node
-        image: node:10-alpine
+        build:
+            context: .
+            dockerfile: docker/node/Dockerfile
         volumes:
             - .:/var/www/project/
         ports:
