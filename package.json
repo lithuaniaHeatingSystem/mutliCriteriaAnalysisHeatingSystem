@@ -15,7 +15,7 @@
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",
-        "watch": "encore dev --watch",
+        "watch": "./node_modules/@symfony/webpack-encore/bin/encore.js dev --watch",
         "build": "encore production --progress"
     }
 }
