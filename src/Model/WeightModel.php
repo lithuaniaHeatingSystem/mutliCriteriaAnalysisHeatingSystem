@@ -4,8 +4,8 @@ namespace App\Model;
 
 use App\Entity\CriteriaType;
 
-class WeightModel {
-
+class WeightModel
+{
     /**
      * @var integer
      */
@@ -55,6 +55,4 @@ class WeightModel {
 
         return $this;
     }
-
-
 }

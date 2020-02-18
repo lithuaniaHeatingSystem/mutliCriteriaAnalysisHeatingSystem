@@ -20,13 +20,14 @@ class ProcessingController extends AbstractController
      *
      * @return Response
      */
-    public function form(Request $request){
-        $CriteriaTypeRepository = $this->getDoctrine() ->getRepository(CriteriaType::class);
+    public function form(Request $request)
+    {
+        $CriteriaTypeRepository = $this->getDoctrine()->getRepository(CriteriaType::class);
         $criteriaTypes = $CriteriaTypeRepository->findAll();
 
         $weightModels = new ArrayCollection();
 
-        foreach ($criteriaTypes as $criteriaType){
+        foreach ($criteriaTypes as $criteriaType) {
             $weightModel = new WeightModel();
             $weightModel->setCriteriaType($criteriaType);
             $weightModel->setWeight(0);
@@ -34,7 +35,8 @@ class ProcessingController extends AbstractController
         }
 
 
-        $form = $this->createForm(WeightCollectionType::class, (new WeightCollectionModel())->setWeightModels($weightModels));
+        $form = $this->createForm(WeightCollectionType::class,
+            (new WeightCollectionModel())->setWeightModels($weightModels));
 
         $form->handleRequest($request);
 
@@ -52,8 +54,4 @@ class ProcessingController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
-
-
 }

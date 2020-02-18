@@ -27,6 +27,7 @@ class WeightCollectionModel
 
     /**
      * @param $weightModels
+     *
      * @return WeightCollectionModel
      */
     public function setWeightModels($weightModels): self
@@ -35,5 +36,4 @@ class WeightCollectionModel
 
         return $this;
     }
-
 }

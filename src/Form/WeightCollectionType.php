@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Criteria;
 use App\Model\WeightCollectionModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -15,7 +14,7 @@ class WeightCollectionType extends AbstractType
     {
         $builder
             ->add('weightModels', CollectionType::class, [
-                'entry_type' => WeightType::class
+                'entry_type' => WeightType::class,
             ]);
     }
 

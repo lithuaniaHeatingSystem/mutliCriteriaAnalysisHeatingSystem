@@ -2,13 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\CriteriaType;
 use App\Model\WeightModel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\CriteriaType;
 
 class WeightType extends AbstractType
 {
@@ -16,20 +16,20 @@ class WeightType extends AbstractType
     {
         $builder
             ->add('weight', IntegerType::class, [
-                'required' => false
+                'required' => false,
             ])
             ->add('criteriaType', EntityType::class, [
                 'class' => CriteriaType::class,
                 'required' => false,
                 'multiple' => false,
-                'disabled' => true
+                'disabled' => true,
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                'data_class' => WeightModel::class
+                'data_class' => WeightModel::class,
             ]
         );
     }
