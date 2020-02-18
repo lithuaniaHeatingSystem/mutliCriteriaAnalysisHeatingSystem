@@ -34,11 +34,6 @@ class ComponentCriteria
     private $criteria;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isPositive;
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -102,18 +97,6 @@ class ComponentCriteria
     public function setCriteria(?Criteria $criteria): self
     {
         $this->criteria = $criteria;
-
-        return $this;
-    }
-
-    public function getIsPositive(): ?bool
-    {
-        return $this->isPositive;
-    }
-
-    public function setIsPositive(bool $isPositive): self
-    {
-        $this->isPositive = $isPositive;
 
         return $this;
     }
