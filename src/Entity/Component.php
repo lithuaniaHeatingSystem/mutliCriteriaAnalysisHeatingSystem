@@ -11,12 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Component
 {
-    const HEATING_TYPE = 1,
-        VALVE_TYPE = 2,
-        PIPE_TYPE = 3,
-        THERMOSTATIC_VALVE_TYPE = 4,
-        CIRCULATION_PUMP_TYPE = 5;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -40,14 +34,15 @@ class Component
     private $link;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $type;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ComponentCriteria", mappedBy="component", orphanRemoval=true)
      */
     private $componentCriterias;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
 
     /**
      * Component constructor.
@@ -126,26 +121,6 @@ class Component
     }
 
     /**
-     * @return int|null
-     */
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param int $type
-     *
-     * @return $this
-     */
-    public function setType(int $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|ComponentCriteria[]
      */
     public function getComponentCriterias(): Collection
@@ -182,6 +157,18 @@ class Component
                 $componentCriteria->setComponent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

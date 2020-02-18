@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,6 +39,16 @@ class Criteria
      * @Assert\NotBlank()
      */
     private $unit;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Type")
+     */
+    private $types;
+
+    public function __construct()
+    {
+        $this->types = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -102,6 +114,32 @@ class Criteria
     public function setUnit(string $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Type[]
+     */
+    public function getTypes(): Collection
+    {
+        return $this->types;
+    }
+
+    public function addType(Type $type): self
+    {
+        if (!$this->types->contains($type)) {
+            $this->types[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(Type $type): self
+    {
+        if ($this->types->contains($type)) {
+            $this->types->removeElement($type);
+        }
 
         return $this;
     }
