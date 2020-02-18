@@ -1,31 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: simoncollin
- * Date: 2020-02-17
- * Time: 14:39
- */
 
-use App\Entity\ComponentCriteria;
+namespace App\Model;
+
+use App\Entity\CriteriaType;
 
 class WeightModel {
 
-    private $weight;
-    private $componentCriteria;
-
     /**
-     * WeightModel constructor.
-     * @param $weight
-     * @param $componentCriteria
+     * @var integer
      */
-    public function __construct($weight, $componentCriteria)
-    {
-        $this->weight = $weight;
-        $this->componentCriteria = $componentCriteria;
-    }
+    private $weight;
 
     /**
-     * @return mixed
+     * @var CriteriaType
+     */
+    private $criteriaType;
+
+    /**
+     * @return integer
      */
     public function getWeight()
     {
@@ -33,27 +25,35 @@ class WeightModel {
     }
 
     /**
-     * @param mixed $weight
+     * @param integer $weight
+     *
+     * @return WeightModel
      */
-    public function setWeight($weight): void
+    public function setWeight($weight): self
     {
         $this->weight = $weight;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return CriteriaType
      */
-    public function getComponentCriteria()
+    public function getCriteriaType()
     {
-        return $this->componentCriteria;
+        return $this->criteriaType;
     }
 
     /**
-     * @param mixed $componentCriteria
+     * @param CriteriaType $criteriaType
+     *
+     * @return WeightModel
      */
-    public function setComponentCriteria($componentCriteria): void
+    public function setCriteriaType($criteriaType): self
     {
-        $this->componentCriteria = $componentCriteria;
+        $this->criteriaType = $criteriaType;
+
+        return $this;
     }
 
 

@@ -100,4 +100,12 @@ class CriteriaType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->criteria->getLabel();
+    }
 }

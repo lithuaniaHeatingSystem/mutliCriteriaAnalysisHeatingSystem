@@ -33,3 +33,15 @@ criteria:
     add:
         title: Create criteria
         submit: Create
+
+processing:
+    form:
+        title: Processing
+        list:
+            title: Liste des critères
+            name: Criteria list
+            label: Name
+            description: Description
+            unit: Unit
+            action: Choose weight
+        submit: Submit

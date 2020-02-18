@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}processing.form.title{% endtrans %}{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {% for weightModel in form.weightModels %}
+        {{ form_row(weightModel) }}
+    {% endfor %}
+    <button type="submit" class="btn  btn-success">{% trans %}processing.form.submit{% endtrans %}</button>
+    {{ form_end(form) }}
+{% endblock %}
