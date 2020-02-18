@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
@@ -20,16 +21,23 @@ class Component
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
      */
     private $label;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
+     * @Assert\Url(groups={"first_step"})
      */
     private $link;
 
@@ -41,6 +49,8 @@ class Component
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
      */
     private $type;
 

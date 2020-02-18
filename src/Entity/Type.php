@@ -28,21 +28,35 @@ class Type
      */
     private $criteriaTypes;
 
+    /**
+     * Type constructor.
+     */
     public function __construct()
     {
         $this->criteriaTypes = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLabel(): ?string
     {
         return $this->label;
     }
 
+    /**
+     * @param string $label
+     *
+     * @return $this
+     */
     public function setLabel(string $label): self
     {
         $this->label = $label;
@@ -58,6 +72,11 @@ class Type
         return $this->criteriaTypes;
     }
 
+    /**
+     * @param CriteriaType $criteriaType
+     *
+     * @return $this
+     */
     public function addCriteriaType(CriteriaType $criteriaType): self
     {
         if (!$this->criteriaTypes->contains($criteriaType)) {
@@ -68,6 +87,11 @@ class Type
         return $this;
     }
 
+    /**
+     * @param CriteriaType $criteriaType
+     *
+     * @return $this
+     */
     public function removeCriteriaType(CriteriaType $criteriaType): self
     {
         if ($this->criteriaTypes->contains($criteriaType)) {
@@ -79,5 +103,13 @@ class Type
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->label;
     }
 }

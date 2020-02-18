@@ -29,10 +29,25 @@ criteria:
             edit: Edit
     edit:
         title: Edit criteria
-        submit: Edit
+        submit: Edi
     add:
         title: Create criteria
         submit: Create
+
+component:
+    form:
+        label: Name
+        description: Description
+        type: Component type
+        link: Url
+        heating: Heating
+        valve: Valve
+        pipe: Pipe
+        thermostatic_valve: Thermostatic valve
+        circulation_pump: Circulation Pump
+    add:
+        title: Create component
+        next: Next
 
 processing:
     form:
