@@ -5,6 +5,7 @@
  - ▶ docker-compose up -d
  - ▶ docker exec lithuania_project_php composer install
  - ▶ docker exec lithuania_project_php bin/console doctrine:schema:create
+ - ▶ docker exec lithuania_project_php php doctrine:fixtures:load
  - ▶ docker exec lithuania_project_node yarn install --no-bin-links
  
 ## Every time
