@@ -36,6 +36,7 @@ criteria:
 
 component:
     form:
+        criteria_value: Value
         label: Name
         description: Description
         type: Component type
@@ -46,8 +47,10 @@ component:
         thermostatic_valve: Thermostatic valve
         circulation_pump: Circulation Pump
     add:
+        criterias: Set value for each criterias
         title: Create component
         next: Next
+        validate: Validate
 
 processing:
     form:

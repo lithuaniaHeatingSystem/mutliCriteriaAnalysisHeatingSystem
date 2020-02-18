@@ -42,7 +42,9 @@ class Component
     private $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ComponentCriteria", mappedBy="component", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ComponentCriteria", mappedBy="component", orphanRemoval=true, cascade={"persist"})
+     *
+     * @Assert\Valid(groups={"second_step"})
      */
     private $componentCriterias;
 
@@ -171,15 +173,39 @@ class Component
         return $this;
     }
 
+    /**
+     * @return Type|null
+     */
     public function getType(): ?Type
     {
         return $this->type;
     }
 
+    /**
+     * @param Type|null $type
+     *
+     * @return $this
+     */
     public function setType(?Type $type): self
     {
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * return Collection|Criteria[]
+     */
+    public function getCriterias(): Collection
+    {
+        $criterias = new ArrayCollection();
+
+        if (count($this->componentCriterias) > 0) {
+            foreach ($this->componentCriterias as $componentCriteria) {
+                $criterias->add($componentCriteria->getCriteria());
+            }
+        }
+
+        return $criterias;
     }
 }

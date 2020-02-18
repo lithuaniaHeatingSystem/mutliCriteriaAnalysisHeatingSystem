@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ComponentCriteriaRepository")
@@ -17,7 +18,9 @@ class ComponentCriteria
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float", precision=10, scale=2)
+     *
+     * @Assert\NotBlank(groups={"second_step"})
      */
     private $value;
 
@@ -42,19 +45,19 @@ class ComponentCriteria
     }
 
     /**
-     * @return int|null
+     * @return float|null
      */
-    public function getValue(): ?int
+    public function getValue(): ?float
     {
         return $this->value;
     }
 
     /**
-     * @param int $value
+     * @param float $value
      *
      * @return $this
      */
-    public function setValue(int $value): self
+    public function setValue(float $value): self
     {
         $this->value = $value;
 
