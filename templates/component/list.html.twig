@@ -31,10 +31,10 @@
                         <td>{{ component.link }}</td>
                         <td>{{ component.type }}</td>
                         <td>
-                            <a href="{{ path('component_delete', {'id': criteria.id}) }}"
-                               class="badge badge-danger">{% trans %}criteria.list.action.remove{% endtrans %}</a>
-                            <a href="{{ path('component_edit', {'id': criteria.id}) }}"
-                               class="badge badge-secondary">{% trans %}criteria.list.action.edit{% endtrans %}</a>
+                            <a href="{{ path('component_delete', {'id': component.id}) }}"
+                               class="badge badge-danger">{% trans %}component.list.action.remove{% endtrans %}</a>
+                            <a href="{{ path('component_edit', {'id': component.id}) }}"
+                               class="badge badge-secondary">{% trans %}component.list.action.edit{% endtrans %}</a>
                         </td>
                     </tr>
                 {% endfor %}

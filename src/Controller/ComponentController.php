@@ -13,34 +13,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class ComponentController extends AbstractController
 {
     /**
-     * @Route("/component", name="component")
+     * @Route("/component-list", name="component_list")
      */
-    public function index()
+    public function list()
     {
-        return $this->render('component/index.html.twig', [
-            'controller_name' => 'ComponentController',
+        //@TODO paginate with pager fanta
+        return $this->render('component/list.html.twig', [
+            'components' => $this->getDoctrine()->getRepository(Component::class)->findAll(),
         ]);
     }
 
     /**
-     * @Route("/component-list", name="component_list")
-     */
-    public function list(Request $request)
-    {
-        // retrieves $_GET and $_POST variables respectively
-       
-        return $this->render('component/list.html.twig', [
-            'components' => $this->getDoctrine()->getRepository(Component::class)->findBy(['type'=>$request->query->get('ComponentType')]),
-        ]);
-    }
-
-        /**
      * @Route("/component-add", name="component_add")
      * @param Request $request
      *
      * @return Response
      */
-    
     public function add(Request $request)
     {
         $form = $this->createForm(ComponentType::class, new Component);
@@ -63,7 +51,7 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component-edit", name="component_edit")
+     * @Route("/component-edit/{id}", name="component_edit")
      * @ParamConverter("component", class="App\Entity\Component")
      *
      * @param Request  $request
@@ -72,7 +60,6 @@ class ComponentController extends AbstractController
      *
      * @return Response
      */
-
     public function edit(Request $request, Component $component)
     {
         $form = $this->createForm(ComponentType::class, $component);
@@ -95,16 +82,15 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/component-delete", name="component_delete")
+     * @Route("/component-delete/{id}", name="component_delete")
      * @ParamConverter("component", class="App\Entity\Component")
      *
      * @param Request  $request
      *
-     * @param Criteria $component
+     * @param Component $component
      *
      * @return Response
      */
-    
     public function delete(Request $request, Component $component)
     {
         $em = $this->getDoctrine()->getManager();
@@ -113,5 +99,4 @@ class ComponentController extends AbstractController
 
         return $this->redirect($this->generateUrl('component_list'));
     }
-    
 }
