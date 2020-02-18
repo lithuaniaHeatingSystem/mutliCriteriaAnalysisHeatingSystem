@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}component.list.title{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1>{% trans %}component.list.name{% endtrans %}</h1>
+        </div>
+        <div class="col text-md-right">
+            <a href="{{ path('component_add') }}" role="button"
+               class="btn btn-success">{% trans %}component.list.action.add{% endtrans %}</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">{% trans %}component.list.label{% endtrans %}</th>
+                    <th scope="col">{% trans %}component.list.description{% endtrans %}</th>
+                    <th scope="col">{% trans %}component.list.link{% endtrans %}</th>
+                    <th scope="col">{% trans %}component.list.type{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for component in components %}
+                    <tr>
+                        <th scope="row">{{ component.label }}</th>
+                        <td>{{ component.description }}</td>
+                        <td>{{ component.link }}</td>
+                        <td>{{ component.type }}</td>
+                        <td>
+                            <a href="{{ path('component_delete', {'id': component.id}) }}"
+                               class="badge badge-danger">{% trans %}component.list.action.remove{% endtrans %}</a>
+                            <a href="{{ path('component_edit', {'id': component.id}) }}"
+                               class="badge badge-secondary">{% trans %}component.list.action.edit{% endtrans %}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
