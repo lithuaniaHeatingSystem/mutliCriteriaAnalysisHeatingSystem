@@ -12,15 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ComponentController extends AbstractController
 {
-    /**
+    /*
      * @Route("/component-list", name="component_list")
      */
     public function list()
     {
         //@TODO paginate with pager fanta
-        return $this->render('component/list.html.twig', [
+        return $this->render('component/list.html.twig');/*, [
             'components' => $this->getDoctrine()->getRepository(Component::class)->findAll(),
-        ]);
+        ]);*/
     }
 
     /**
@@ -29,6 +29,7 @@ class ComponentController extends AbstractController
      *
      * @return Response
      */
+    /*
     public function add(Request $request)
     {
         $form = $this->createForm(ComponentType::class, new Component);
@@ -60,6 +61,7 @@ class ComponentController extends AbstractController
      *
      * @return Response
      */
+    /*
     public function edit(Request $request, Component $component)
     {
         $form = $this->createForm(ComponentType::class, $component);
@@ -90,7 +92,7 @@ class ComponentController extends AbstractController
      * @param Component $component
      *
      * @return Response
-     */
+     *//*
     public function delete(Request $request, Component $component)
     {
         $em = $this->getDoctrine()->getManager();
@@ -99,4 +101,5 @@ class ComponentController extends AbstractController
 
         return $this->redirect($this->generateUrl('component_list'));
     }
+    */
 }

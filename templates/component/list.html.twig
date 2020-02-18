@@ -7,10 +7,10 @@
         <div class="col">
             <h1>{% trans %}component.list.name{% endtrans %}</h1>
         </div>
-        <div class="col text-md-right">
+        {% comment %} <div class="col text-md-right">
             <a href="{{ path('component_add') }}" role="button"
                class="btn btn-success">{% trans %}component.list.action.add{% endtrans %}</a>
-        </div>
+        </div> {% endcomment %}
     </div>
     <div class="row">
         <div class="table-responsive">
@@ -24,8 +24,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for component in components %}
-                    <tr>
+               {% comment %}  {% for component in components %}
+                        <tr>
                         <th scope="row">{{ component.label }}</th>
                         <td>{{ component.description }}</td>
                         <td>{{ component.link }}</td>
@@ -36,7 +36,7 @@
                             <a href="{{ path('component_edit', {'id': component.id}) }}"
                                class="badge badge-secondary">{% trans %}component.list.action.edit{% endtrans %}</a>
                         </td>
-                    </tr>
+                    </tr> {% endcomment %}
                 {% endfor %}
                 </tbody>
             </table>
