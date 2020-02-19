@@ -41,7 +41,7 @@ class Criteria
     private $unit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist"})
      */
     private $criteriaTypes;
 
@@ -140,10 +140,10 @@ class Criteria
     {
         if ($this->criteriaTypes->contains($criteriaType)) {
             $this->criteriaTypes->removeElement($criteriaType);
-            // set the owning side to null (unless already changed)
-            if ($criteriaType->getCriteria() === $this) {
-                $criteriaType->setCriteria(null);
-            }
+//            // set the owning side to null (unless already changed)
+//            if ($criteriaType->getCriteria() === $this) {
+//                $criteriaType->setCriteria(null);
+//            }
         }
 
         return $this;
