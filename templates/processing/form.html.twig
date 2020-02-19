@@ -6,8 +6,17 @@
 
     {{ form_start(form) }}
     {% for weightModel in form.weightModels %}
-        {{ form_row(weightModel) }}
+        {{ weightModel.vars.value.criteriaType }}
+        {{ form_widget(weightModel.weight, {'attr':{'class':'custom-range weight', 'min':'0', 'max':'100', 'step':'10'},'value':'50'}) }}
     {% endfor %}
     <button type="submit" class="btn  btn-success">{% trans %}processing.form.submit{% endtrans %}</button>
     {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(document).ready(function () {
+            alert('hola')
+        });
+    </script>
 {% endblock %}
