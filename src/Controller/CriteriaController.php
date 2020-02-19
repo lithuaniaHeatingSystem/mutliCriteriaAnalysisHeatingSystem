@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Criteria;
+use App\Entity\Type;
 use App\Form\CriteriaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,44 +25,44 @@ class CriteriaController extends AbstractController
     }
 
     /**
-     * @Route("/criteria-add", name="criteria_add")
+     * @Route("/criteria/{criteriaId}", name="create_or_update_criteria")
      * @param Request $request
      *
+     * @param int     $criteriaId
+     *
      * @return Response
      */
-    public function add(Request $request)
+    public function createOrUpdate(Request $request, int $criteriaId = null)
     {
-        $form = $this->createForm(CriteriaType::class, new Criteria);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $criteria = $form->getData();
-            $em->persist($criteria);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('criteria_list'));
+        $criteria = null;
+        if ($criteriaId !== null) {
+            $criteria = $this->getDoctrine()->getRepository(Criteria::class)->find($criteriaId);
+        }
+        if ($criteria === null && $criteriaId !== null) {
+            return $this->redirect($this->generateUrl('create_or_update_criteria', ['criteriaId' => null]));
+        } elseif ($criteriaId === null && $criteria === null) {
+            $criteria = new Criteria();
         }
 
-        return $this->render('criteria/add.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+        $types = $this->getDoctrine()->getRepository(Type::class)->findAll();
 
-    /**
-     * @Route("/criteria-edit/{id}", name="criteria_edit")
-     * @ParamConverter("criteria", class="App\Entity\Criteria")
-     *
-     * @param Request  $request
-     *
-     * @param Criteria $criteria
-     *
-     * @return Response
-     */
-    public function edit(Request $request, Criteria $criteria)
-    {
+        // pre set collection
+        if (count($criteria->getCriteriaTypes()) === 0) {
+            // new criteria doesn't content type
+            foreach ($types as $type) {
+                $criteria->addCriteriaType((new \App\Entity\CriteriaType())->setType($type));
+            }
+        } else {
+            // component already have criteria updated it if new
+            $oldTypes = $criteria->getTypes();
+
+            foreach ($types as $type) {
+                if (!$oldTypes->contains($type)) {
+                    $criteria->addCriteriaType((new \App\Entity\CriteriaType())->setType($type));
+                }
+            }
+        }
+
         $form = $this->createForm(CriteriaType::class, $criteria);
 
         $form->handleRequest($request);
@@ -69,14 +70,26 @@ class CriteriaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+
+            /** @var Criteria $criteria */
             $criteria = $form->getData();
+            // remove unchecked criteria type and keep checked
+            foreach ($form[ 'criteriaTypes' ] as $criteriaType) {
+                if (!$criteriaType[ 'isChecked' ]->getData()) {
+                    $criteria->removeCriteriaType($criteriaType->getData());
+                    if ($criteriaType->getData()->getId()) {
+                        $em->remove($criteriaType->getData());
+                    }
+                }
+            }
+
             $em->persist($criteria);
             $em->flush();
 
             return $this->redirect($this->generateUrl('criteria_list'));
         }
 
-        return $this->render('criteria/edit.html.twig', [
+        return $this->render('criteria/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
