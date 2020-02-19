@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ComponentRepository")
@@ -20,27 +21,38 @@ class Component
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
      */
     private $label;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
+     * @Assert\Url(groups={"first_step"})
      */
     private $link;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ComponentCriteria", mappedBy="component", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ComponentCriteria", mappedBy="component", orphanRemoval=true, cascade={"persist"})
+     *
+     * @Assert\Valid(groups={"second_step"})
      */
     private $componentCriterias;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank(groups={"first_step"})
      */
     private $type;
 
@@ -161,15 +173,39 @@ class Component
         return $this;
     }
 
+    /**
+     * @return Type|null
+     */
     public function getType(): ?Type
     {
         return $this->type;
     }
 
+    /**
+     * @param Type|null $type
+     *
+     * @return $this
+     */
     public function setType(?Type $type): self
     {
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * return Collection|Criteria[]
+     */
+    public function getCriterias(): Collection
+    {
+        $criterias = new ArrayCollection();
+
+        if (count($this->componentCriterias) > 0) {
+            foreach ($this->componentCriterias as $componentCriteria) {
+                $criterias->add($componentCriteria->getCriteria());
+            }
+        }
+
+        return $criterias;
     }
 }

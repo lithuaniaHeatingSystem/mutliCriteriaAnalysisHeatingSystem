@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <h1>{% trans %}component.add.criterias{% endtrans %}</h1>
+    </div>
+    <div>
+        <h3>Component : {{ form.vars.value.label }}, type: {{ form.vars.value.type }}</h3>
+    </div>
+    <div class="row">
+        {{ form_start(form, {'attr': {'class': 'w-100'}}) }}
+        {% for componentCriteria in form.componentCriterias %}
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center">
+                    {{ componentCriteria.vars.value.criteria.label }}
+                    to {{ componentCriteria.vars.value.criteria.unit }}
+                </div>
+                <div class="col-sm-6">
+                    {{ form_widget(componentCriteria) }}
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">{% trans %}component.add.validate{% endtrans %}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

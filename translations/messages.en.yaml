@@ -29,7 +29,37 @@ criteria:
             edit: Edit
     edit:
         title: Edit criteria
-        submit: Edit
+        submit: Edi
     add:
         title: Create criteria
         submit: Create
+
+component:
+    form:
+        criteria_value: Value
+        label: Name
+        description: Description
+        type: Component type
+        link: Url
+        heating: Heating
+        valve: Valve
+        pipe: Pipe
+        thermostatic_valve: Thermostatic valve
+        circulation_pump: Circulation Pump
+    add:
+        criterias: Set value for each criterias
+        title: Create component
+        next: Next
+        validate: Validate
+
+processing:
+    form:
+        title: Processing
+        list:
+            title: Liste des critères
+            name: Criteria list
+            label: Name
+            description: Description
+            unit: Unit
+            action: Choose weight
+        submit: Submit

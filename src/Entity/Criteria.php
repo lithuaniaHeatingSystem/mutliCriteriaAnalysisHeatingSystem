@@ -41,13 +41,13 @@ class Criteria
     private $unit;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Type")
+     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist"})
      */
-    private $types;
+    private $criteriaTypes;
 
     public function __construct()
     {
-        $this->types = new ArrayCollection();
+        $this->criteriaTypes = new ArrayCollection();
     }
 
     /**
@@ -119,28 +119,41 @@ class Criteria
     }
 
     /**
-     * @return Collection|Type[]
+     * @return Collection|CriteriaType[]
      */
-    public function getTypes(): Collection
+    public function getCriteriaTypes(): Collection
     {
-        return $this->types;
+        return $this->criteriaTypes;
     }
 
-    public function addType(Type $type): self
+    public function addCriteriaType(CriteriaType $criteriaType): self
     {
-        if (!$this->types->contains($type)) {
-            $this->types[] = $type;
+        if (!$this->criteriaTypes->contains($criteriaType)) {
+            $this->criteriaTypes[] = $criteriaType;
+            $criteriaType->setCriteria($this);
         }
 
         return $this;
     }
 
-    public function removeType(Type $type): self
+    public function removeCriteriaType(CriteriaType $criteriaType): self
     {
-        if ($this->types->contains($type)) {
-            $this->types->removeElement($type);
+        if ($this->criteriaTypes->contains($criteriaType)) {
+            $this->criteriaTypes->removeElement($criteriaType);
+            // set the owning side to null (unless already changed)
+            if ($criteriaType->getCriteria() === $this) {
+                $criteriaType->setCriteria(null);
+            }
         }
 
         return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->label;
     }
 }
