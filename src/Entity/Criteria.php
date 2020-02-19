@@ -41,7 +41,7 @@ class Criteria
     private $unit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist", "remove"})
      */
     private $criteriaTypes;
 
