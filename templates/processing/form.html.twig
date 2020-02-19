@@ -5,21 +5,18 @@
 {% block body %}
 
     {{ form_start(form) }}
-
     <nav>
-
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             {%  for type in types %}
                 {% if loop.first %}
-                <a class="nav-item nav-link active" id={{"nav-" ~ type ~ "-tab" }} data-toggle="tab" href={{"#nav-" ~ type }} role="tab" aria-controls={{"#nav-" ~ type }} aria-selected="true">{{ type }}</a>
+                <a class="nav-item nav-link active" id={{"nav-" ~ type ~ "-tab" }} data-toggle="tab" href={{"#nav-" ~ type }} role="tab" aria-controls={{"#nav-" ~ type }} aria-selected="true">{{ ('component.form.' ~ type.label)|trans }}</a>
                 {% else %}
-                    <a class="nav-item nav-link" id={{"nav-" ~ type ~ "-tab" }} data-toggle="tab" href={{"#nav-" ~ type }} role="tab" aria-controls={{"#nav-" ~ type }} aria-selected="false">{{ type }}</a>
+                    <a class="nav-item nav-link" id={{"nav-" ~ type ~ "-tab" }} data-toggle="tab" href={{"#nav-" ~ type }} role="tab" aria-controls={{"#nav-" ~ type }} aria-selected="false">{{ ('component.form.' ~ type.label)|trans }}</a>
                 {% endif %}
             {%  endfor %}
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-
         {%  for type in types %}
             {% if loop.first %}
                <div class="tab-pane fade show active" id={{"nav-" ~ type }} role="tabpanel" aria-labelledby={{"nav-" ~ type ~ "-tab" }}>
@@ -37,7 +34,6 @@
         {% endfor %}
 
     </div>
-
     <button type="submit" class="btn  btn-success">{% trans %}processing.form.submit{% endtrans %}</button>
     {{ form_end(form) }}
 {% endblock %}

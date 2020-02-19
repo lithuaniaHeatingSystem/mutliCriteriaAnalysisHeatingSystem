@@ -20,25 +20,27 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {% trans %}menu.component.name{% endtrans %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.heating{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.pipe{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.thermostatic_valve{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.differential_valve{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.circulation_pump{% endtrans %}</a>
+                        {% for menuType in menuTypes %}
+                            <a class="dropdown-item"
+                               href="{{ path('component_list',{'typeLabel': menuType.label}) }}">{{ ('menu.component.' ~ menuType)|trans }}</a>
+                        {% endfor %}
                     </div>
                 </li>
-                <a class="nav-item nav-link" href="{{ path('criteria_list') }}">{% trans %}menu.criteria{% endtrans %}</a>
-                <a class="nav-item nav-link" href="{{ path('processing_form') }}">{% trans %}menu.process{% endtrans %}</a>
+                <a class="nav-item nav-link"
+                   href="{{ path('criteria_list') }}">{% trans %}menu.criteria{% endtrans %}</a>
+                <a class="nav-item nav-link"
+                   href="{{ path('processing_form') }}">{% trans %}menu.process{% endtrans %}</a>
             </div>
         </div>
     </nav>
 </header>
 <div class="container">
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </div>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

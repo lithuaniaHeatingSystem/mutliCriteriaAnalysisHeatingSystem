@@ -12,7 +12,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $heatingType = (new Type)->setLabel('radiators');
+        $heatingType = (new Type)->setLabel('radiator');
         $pipeType = (new Type)->setLabel('pipe');
         $thermostaticValveType = (new Type)->setLabel('thermostatic_valve');
         $valveType = (new Type)->setLabel('valve');
