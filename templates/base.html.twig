@@ -24,11 +24,11 @@
                         {% trans %}menu.component.name{% endtrans %}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.heating{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.pipe{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.thermostatic_valve{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.differential_valve{% endtrans %}</a>
-                        <a class="dropdown-item" href="#">{% trans %}menu.component.circulation_pump{% endtrans %}</a>
+                        <a class="dropdown-item" href="{{ path('heating_list') }}">{% trans %}menu.component.heating{% endtrans %}</a>
+                        <a class="dropdown-item" href="{{ path('pipe_list') }}">{% trans %}menu.component.pipe{% endtrans %}</a>
+                        <a class="dropdown-item" href="{{ path('thermostaticvalve_list') }}">{% trans %}menu.component.thermostatic_valve{% endtrans %}</a>
+                        <a class="dropdown-item" href="{{ path('valve_list') }}">{% trans %}menu.component.differential_valve{% endtrans %}</a>
+                        <a class="dropdown-item" href="{{ path('circulationpump_list') }}">{% trans %}menu.component.circulation_pump{% endtrans %}</a>
                     </div>
                 </li>
                 <a class="nav-item nav-link" href="{{ path('criteria_list') }}">{% trans %}menu.criteria{% endtrans %}</a>

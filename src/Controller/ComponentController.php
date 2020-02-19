@@ -7,6 +7,7 @@ use App\Entity\ComponentCriteria;
 use App\Form\ComponentFirstType;
 use App\Form\ComponentSecondType;
 use App\Repository\CriteriaRepository;
+use App\Entity\Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -14,8 +15,87 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function PHPSTORM_META\type;
+
 class ComponentController extends AbstractController
 {
+    /**
+     * @Route("/component-list", name="component_list")
+     */
+    public function list()
+    {
+        //@TODO paginate with pager fanta
+        return $this->render('component/list.html.twig', [
+            'components' => $this->getDoctrine()->getRepository(Component::class)->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/heating-list", name="heating_list")
+     */
+
+    public function listHeating()
+    {
+        $repo = $this->getDoctrine()->getRepository(Component::class);
+        $components= $repo->findBy(array('type' => '11'));
+        return $this->render('component/list.html.twig',[
+        'components' =>$components
+        ]);
+    }
+
+    /**
+     * @Route("/pipe-list", name="pipe_list")
+     */
+
+    public function listPipe()
+    {
+        $repo = $this->getDoctrine()->getRepository(Component::class);
+        $components= $repo->findBy(array('type' => '12'));
+        return $this->render('component/list.html.twig',[
+        'components' =>$components
+        ]);
+    }
+
+    /**
+     * @Route("/thermostaticvalve-list", name="thermostaticvalve_list")
+     */
+
+    public function listThermostaticValve()
+    {
+        $repo = $this->getDoctrine()->getRepository(Component::class);
+        $components= $repo->findBy(array('type' => '13'));
+        return $this->render('component/list.html.twig',[
+        'components' =>$components
+        ]);
+    }
+
+    
+    /**
+     * @Route("/valve-list", name="valve_list")
+     */
+
+    public function listValve()
+    {
+        $repo = $this->getDoctrine()->getRepository(Component::class);
+        $components= $repo->findBy(array('type' => '14'));
+        return $this->render('component/list.html.twig',[
+        'components' =>$components
+        ]);
+    }
+
+    /**
+     * @Route("/circulationpump-list", name="circulationpump_list")
+     */
+
+    public function listCirculationPump()
+    {
+        $repo = $this->getDoctrine()->getRepository(Component::class);
+        $components= $repo->findBy(array('type' => '15'));
+        return $this->render('component/list.html.twig',[
+        'components' =>$components
+        ]);
+    }
+
     /**
      * @Route("/component/{componentId}", name="create_or_update_component")
      *
@@ -124,13 +204,20 @@ class ComponentController extends AbstractController
      *
      * @return Response
      */
-    public function delete(Request $request, Component $component)
+    public function delete(Component $component)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($component);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('component_list'));
+        $repository = $this->getDoctrine()
+                   ->getManager()
+                   ->getRepository(Component::class);
+        $typeheating = $repository->findOneBy(array('type' => '11'));
+        $typepipe = $repository->findOneBy(array('type' => '12'));
+
+        if($typeheating === '11') return $this->redirect($this->generateUrl('heating_list'));
+        if($typepipe === '12') return $this->redirect($this->generateUrl('pipe_list'));
     }
 
 }

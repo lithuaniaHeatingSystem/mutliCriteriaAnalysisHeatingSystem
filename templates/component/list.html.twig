@@ -7,10 +7,10 @@
         <div class="col">
             <h1>{% trans %}component.list.name{% endtrans %}</h1>
         </div>
-        {% comment %} <div class="col text-md-right">
-            <a href="{{ path('component_add') }}" role="button"
+        <div class="col text-md-right">
+            <a href="{{ path('create_or_update_component') }}" role="button"
                class="btn btn-success">{% trans %}component.list.action.add{% endtrans %}</a>
-        </div> {% endcomment %}
+        </div>
     </div>
     <div class="row">
         <div class="table-responsive">
@@ -24,8 +24,8 @@
                 </tr>
                 </thead>
                 <tbody>
-               {% comment %}  {% for component in components %}
-                        <tr>
+                {% for component in components %}
+                    <tr>
                         <th scope="row">{{ component.label }}</th>
                         <td>{{ component.description }}</td>
                         <td>{{ component.link }}</td>
@@ -33,14 +33,13 @@
                         <td>
                             <a href="{{ path('component_delete', {'id': component.id}) }}"
                                class="badge badge-danger">{% trans %}component.list.action.remove{% endtrans %}</a>
-                            <a href="{{ path('component_edit', {'id': component.id}) }}"
+                            <a href="{{ path('create_or_update_component', { 'id': component.id}) | replace({'?id=': '/'}) }}"
                                class="badge badge-secondary">{% trans %}component.list.action.edit{% endtrans %}</a>
                         </td>
-                    </tr> {% endcomment %}
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 {% endblock %}
-
