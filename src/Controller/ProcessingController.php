@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\CriteriaType;
+use App\Entity\Type;
 use App\Form\WeightCollectionType;
 use App\Model\WeightCollectionModel;
 use App\Model\WeightModel;
+use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +27,9 @@ class ProcessingController extends AbstractController
         $CriteriaTypeRepository = $this->getDoctrine()->getRepository(CriteriaType::class);
         $criteriaTypes = $CriteriaTypeRepository->findAll();
 
+        $types = $this->getDoctrine()->getRepository(Type::class)->findAll();
+
+
         $weightModels = new ArrayCollection();
 
         foreach ($criteriaTypes as $criteriaType) {
@@ -35,23 +40,41 @@ class ProcessingController extends AbstractController
         }
 
 
-        $form = $this->createForm(WeightCollectionType::class,
-            (new WeightCollectionModel())->setWeightModels($weightModels));
+            $form = $this->createForm(WeightCollectionType::class,
+                (new WeightCollectionModel())->setWeightModels($weightModels));
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $criteria = $form->getData();
-            $em->persist($criteria);
-            $em->flush();
+                $weightModels = $form->getData()->getWeightModels();
 
-            return $this->redirect($this->generateUrl('criteria_list'));
+            /** @var WeightModel $data */
+                foreach($types as $type){
+                    var_dump($type.'    : ');
+                    $totalWeight = 0;
+                    foreach ($weightModels as $data){
+                        if($data->getCriteriaType()->getType() ==  $type){
+                            $totalWeight += $data->getWeight();
+                        }
+                    }
+                    foreach ($weightModels  as $data){
+                        if($data->getCriteriaType()->getType() ==  $type){
+                            $data->setWeight($data->getWeight()/$totalWeight);
+                        }
+                    }
+                }
+
+
+
+
+                /** TODO call processing service **/
+
         }
 
         return $this->render('processing/form.html.twig', [
             'form' => $form->createView(),
+            'types' => $types
         ]);
     }
 }
