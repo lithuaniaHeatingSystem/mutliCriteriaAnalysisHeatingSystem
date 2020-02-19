@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Component;
-use App\Form\ComponentType;
+use App\Entity\ComponentCriteria;
+use App\Form\ComponentFirstType;
+use App\Form\ComponentSecondType;
+use App\Repository\CriteriaRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,74 +17,103 @@ use Symfony\Component\Routing\Annotation\Route;
 class ComponentController extends AbstractController
 {
     /**
-     * @Route("/component-list", name="component_list")
-     */
-    public function list()
-    {
-        //@TODO paginate with pager fanta
-        return $this->render('component/list.html.twig', [
-            'components' => $this->getDoctrine()->getRepository(Component::class)->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/component-add", name="component_add")
-     * @param Request $request
+     * @Route("/component/{componentId}", name="create_or_update_component")
+     *
+     * @param Request  $request
+     * @param int|null $componentId
      *
      * @return Response
      */
-    public function add(Request $request)
+    public function createOrUpdateComponent(Request $request, int $componentId = null)
     {
-        $form = $this->createForm(ComponentType::class, new Component);
+        $component = null;
+        if ($componentId !== null) {
+            $component = $this->getDoctrine()->getRepository(Component::class)->find($componentId);
+        }
+        if ($component === null && $componentId !== null) {
+            return $this->redirect($this->generateUrl('create_or_update_component', ['componentId' => null]));
+        } elseif ($componentId === null && $component === null) {
+            $component = new Component();
+        }
+
+        $form = $this->createForm(ComponentFirstType::class, $component, ['validation_groups' => ['first_step']]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
             $component = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+
             $em->persist($component);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('component_list'));
+            return $this->redirect($this->generateUrl('create_or_update_component_criteria',
+                ['componentId' => $component->getId()]));
         }
 
-        return $this->render('component/add.html.twig', [
+
+        return $this->render('component/add_first_step.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/component-edit/{id}", name="component_edit")
-     * @ParamConverter("component", class="App\Entity\Component")
+     * @Route("/component-criteria/{componentId}", name="create_or_update_component_criteria")
+     * @ParamConverter("component", options={"id" = "componentId"})
      *
-     * @param Request  $request
-     *
-     * @param Component $component
+     * @param Request            $request
+     * @param Component          $component
+     * @param CriteriaRepository $criteriaRepository
      *
      * @return Response
      */
-    public function edit(Request $request, Component $component)
+    public function createOrUpdateComponentCriteria(Request $request,
+        Component $component,
+        CriteriaRepository $criteriaRepository)
     {
-        $form = $this->createForm(ComponentType::class, $component);
+        $type = $component->getType();
+        $criterias = $criteriaRepository->findByType($type);
+
+        // pre set collection
+        if (count($component->getComponentCriterias()) === 0) {
+            // new component doesn't content criteria
+            foreach ($criterias as $criteria) {
+                $component->addComponentCriteria((new ComponentCriteria())->setComponent($component)->setCriteria($criteria));
+            }
+        } else {
+            // component already have criteria updated it if new
+            $oldCriterias = $component->getCriterias();
+            foreach ($criterias as $criteria) {
+                if (!$oldCriterias->contains($criteria)) {
+                    $component->addComponentCriteria((new ComponentCriteria())->setComponent($component)->setCriteria($criteria));
+                }
+            }
+        }
+
+        $form = $this->createFormBuilder($component, ['validation_groups' => ['second_step']])
+            ->add('componentCriterias', CollectionType::class, [
+                'entry_type' => ComponentSecondType::class,
+            ])
+            ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $component = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $criteria = $form->getData();
-            $em->persist($criteria);
+
+            $em->persist($component);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('component_list'));
+            //@TODO redirect to list
+//            return $this->redirect($this->generateUrl('component'));
         }
 
-        return $this->render('component/edit.html.twig', [
+
+        return $this->render('component/add_second_step.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/component-delete/{id}", name="component_delete")
      * @ParamConverter("component", class="App\Entity\Component")

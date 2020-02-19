@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Criteria;
+use App\Entity\Type;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,32 +20,18 @@ class CriteriaRepository extends ServiceEntityRepository
         parent::__construct($registry, Criteria::class);
     }
 
-    // /**
-    //  * @return Criteria[] Returns an array of Criteria objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Find all criteria by type
+     *
+     * @param Type $type
+     *
+     * @return mixed
+     */
+    public function findByType(Type $type)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('c')->join('c.criteriaTypes', 'criteria_types', 'WITH',
+            'criteria_types.type = :type')
+            ->setParameter('type', $type)
+            ->getQuery()->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Criteria
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
