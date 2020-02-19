@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
+use App\Entity\Criteria;
 use App\Entity\CriteriaType;
+use App\Entity\Type;
 
 class WeightModel
 {
@@ -15,6 +17,17 @@ class WeightModel
      * @var CriteriaType
      */
     private $criteriaType;
+
+    /**
+     * WeightModel constructor.
+     * @param int $weight
+     * @param CriteriaType $criteriaType
+     */
+    public function __construct(int $weight, CriteriaType $criteriaType)
+    {
+        $this->weight = $weight;
+        $this->criteriaType = $criteriaType;
+    }
 
     /**
      * @return integer
@@ -54,5 +67,9 @@ class WeightModel
         $this->criteriaType = $criteriaType;
 
         return $this;
+    }
+
+    public function isGoodCriteriaType(Criteria $criteria, Type $type){
+        return $this->criteriaType->getCriteria()->getId() == $criteria->getId() && $this->criteriaType->getType()->getId() == $type->getId();
     }
 }
