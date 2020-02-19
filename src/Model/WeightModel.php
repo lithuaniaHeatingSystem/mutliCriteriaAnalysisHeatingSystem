@@ -17,18 +17,7 @@ class WeightModel
      * @var CriteriaType
      */
     private $criteriaType;
-
-    /**
-     * WeightModel constructor.
-     * @param int $weight
-     * @param CriteriaType $criteriaType
-     */
-    public function __construct(int $weight, CriteriaType $criteriaType)
-    {
-        $this->weight = $weight;
-        $this->criteriaType = $criteriaType;
-    }
-
+    
     /**
      * @return integer
      */

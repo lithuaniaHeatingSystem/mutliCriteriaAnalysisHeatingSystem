@@ -117,7 +117,6 @@ class MultiCriteriaAnalyseService {
                 }
             }
         }
-        var_dump($res);
         return $res;
     }
 
