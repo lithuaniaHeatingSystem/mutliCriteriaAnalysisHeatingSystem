@@ -8,7 +8,7 @@
             <h1>{% trans %}criteria.list.name{% endtrans %}</h1>
         </div>
         <div class="col text-md-right">
-            <a href="{{ path('criteria_add') }}" role="button"
+            <a href="{{ path('create_or_update_criteria') }}" role="button"
                class="btn btn-success">{% trans %}criteria.list.action.add{% endtrans %}</a>
         </div>
     </div>
@@ -32,7 +32,7 @@
                         <td>
                             <a href="{{ path('criteria_delete', {'id': criteria.id}) }}"
                                class="badge badge-danger">{% trans %}criteria.list.action.remove{% endtrans %}</a>
-                            <a href="{{ path('criteria_edit', {'id': criteria.id}) }}"
+                            <a href="{{ path('create_or_update_criteria', {'criteriaId': criteria.id}) }}"
                                class="badge badge-secondary">{% trans %}criteria.list.action.edit{% endtrans %}</a>
                         </td>
                     </tr>

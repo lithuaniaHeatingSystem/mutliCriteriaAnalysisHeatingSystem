@@ -5,11 +5,33 @@
         <h1>{% trans %}criteria.add.title{% endtrans %}</h1>
     </div>
     <div class="row">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
+        {{ form_start(form,{'attr': {'class': 'w-100'}}) }}
+        {{ form_row(form.label) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.unit) }}
+
+        <fieldset class="form-group">
+            {{ form_label(form.criteriaTypes) }}
+            {% for criteriaType  in form.criteriaTypes %}
+                <fieldset class="form-group d-flex justify-content-between component_type">
+                    <div class="is_checked" data_is_checked_id_type="{{ criteriaType.vars.value.type.id }}">
+                        {{ form_row(criteriaType.isChecked, {'label': 'component.form.' ~ criteriaType.vars.value.type}) }}
+                    </div>
+                    <div class="is_positive hide" data_is_positive_id_type="{{ criteriaType.vars.value.type.id }}">
+                        {{ form_row(criteriaType.isPositive) }}
+                    </div>
+                </fieldset>
+            {% endfor %}
+        </fieldset>
+
         <button type="submit" class="btn  btn-success">{% trans %}criteria.add.submit{% endtrans %}</button>
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('criteria') }}
 {% endblock %}
 
 

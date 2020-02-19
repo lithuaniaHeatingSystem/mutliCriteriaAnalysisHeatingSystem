@@ -41,7 +41,7 @@ class Criteria
     private $unit;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\CriteriaType", mappedBy="criteria", cascade={"persist"}, orphanRemoval=true)
      */
     private $criteriaTypes;
 
@@ -148,7 +148,23 @@ class Criteria
 
         return $this;
     }
-    
+
+    /**
+     * return Collection|Type[]
+     */
+    public function getTypes(): Collection
+    {
+        $types = new ArrayCollection();
+
+        if (count($this->criteriaTypes) > 0) {
+            foreach ($this->criteriaTypes as $criteriaType) {
+                $types->add($criteriaType->getType());
+            }
+        }
+
+        return $types;
+    }
+
     /**
      * @return string
      */
