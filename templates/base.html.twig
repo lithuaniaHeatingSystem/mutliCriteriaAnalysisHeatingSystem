@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light"  style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-expand-lg">
 
         <a class="navbar-brand" href="{{ path('home') }}">{% trans %}menu.name{% endtrans %}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -27,7 +27,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% for menuType in menuTypes %}
-                            <a class="dropdown-item"
+                        <a class="dropdown-item"
                                href="{{ path('component_list',{'typeLabel': menuType.label}) }}">{{ ('menu.component.' ~ menuType)|trans }}</a>
                         {% endfor %}
                     </div>
@@ -40,7 +40,7 @@
         </div>
     </nav>
 </header>
-<div class="container mt-5">
+<div class="container">
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}
