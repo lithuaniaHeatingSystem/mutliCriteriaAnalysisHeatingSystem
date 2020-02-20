@@ -1,5 +1,6 @@
 menu:
     name: Heating system
+    result: Result
     component:
         name: Components
         radiator: Radiator
@@ -82,3 +83,19 @@ processing:
             unit: Unit
             action: Choose weight
         submit: Submit
+
+result:
+    list:
+        tile: Result list
+        name: Result list
+        created_at: Created
+        actions: Actions
+        action:
+            new: Create new result
+            show: Show
+    show:
+        radiator: Best Radiators
+        pipe: Best pipes
+        thermostatic_valve: Best thermostatic valves
+        valve: Best valves
+        circulation_pump: Best circulation pumps
