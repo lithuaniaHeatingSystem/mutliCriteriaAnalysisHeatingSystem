@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Component;
 use App\Entity\Result;
+use App\Entity\Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +24,9 @@ class ResultController extends AbstractController
 //        $array = [];
 //        foreach ($types as $type) {
 //            if (count($array) === 0) {
-//                $array = [$type->getLabel() => ['4', '5']];
+//                $array = [$type->getId() => ['4', '5']];
 //            }else{
-//                $array += [$type->getLabel() => ['4']];
+//                $array += [$type->getId() => ['4']];
 //            }
 //        }
 //
@@ -46,18 +47,22 @@ class ResultController extends AbstractController
      *
      * @return Response
      */
-    public
-    function showResult(Result $result)
+    public function showResult(Result $result)
     {
         $typeComponents = unserialize($result->getResult());
-
+        $types = [];
         foreach ($typeComponents as $key => $values) {
+            $type = $this->getDoctrine()->getRepository(Type::class)->find($key);
+            count($types) === 0 ? $types = [$key => $type] : $types += [$key => $type];
             foreach ($typeComponents[ $key ] as $keyIdComponent => $componentId) {
                 $typeComponents[ $key ][ $keyIdComponent ] = $this->getDoctrine()->getRepository(Component::class)->find($componentId);
             }
         }
 
-        return $this->render('result/show.html.twig',
-            ['typeComponents' => $typeComponents]);
+        return $this->render('result/show.html.twig', [
+            'typeComponents' => $typeComponents,
+            'entityTypes' => $types,
+            'result' => $result,
+        ]);
     }
 }
