@@ -9,7 +9,7 @@ use App\Entity\Type;
 class WeightModel
 {
     /**
-     * @var integer
+     * @var float
      */
     private $weight;
 
@@ -21,7 +21,7 @@ class WeightModel
     /**
      * @return integer
      */
-    public function getWeight()
+    public function getWeight() : float
     {
         return $this->weight;
     }
@@ -31,7 +31,7 @@ class WeightModel
      *
      * @return WeightModel
      */
-    public function setWeight($weight): self
+    public function setWeight(float $weight): self
     {
         $this->weight = $weight;
 

@@ -21,8 +21,9 @@ class HomeController extends AbstractController
     public function index(MultiCriteriaAnalyseService $multiCriteriaAnalyseService)
     {
 
-        $array = new WeightCollectionModel();
-        $multiCriteriaAnalyseService->calculCriteria($array);
+       //
+        // $array = new WeightCollectionModel();
+        //$multiCriteriaAnalyseService->calculCriteria($array);
 
         return $this->render('home/index.html.twig', [
         ]);

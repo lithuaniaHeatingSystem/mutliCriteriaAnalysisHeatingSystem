@@ -58,13 +58,8 @@ class MultiCriteriaAnalyseService {
 
     public function calculCriteria(WeightCollectionModel $weigthModels)
     {
-        $res = array();
-
         $res = $this->calculBaseCriteria($weigthModels);
         $res = $this->finalCalcul($res);
-//        //etape 4
-//        //etape 5
-//        //etape 6
         return $res;
     }
 
@@ -101,8 +96,8 @@ class MultiCriteriaAnalyseService {
                     $valCalcul = $this->calculValueNetComponent($criteria, $weight, $sommeCritType, $component);
                     //Stocker la valeur au bon endroit component-criteria => valueNORMALIZE
                     $criteriaTypes = $this->criteriaTypeRepository->findBy(['type' => $type->getId(), 'criteria' => $criteria->getId()]);
-                    $arrayValue= array($criteriaTypes[0]->getId() => $valCalcul);
-                    //$res[$component->getId()] = [$criteriaTypes[0]->getId() => $valCalcul];
+                    $arrayValue = array($criteriaTypes[0]->getId() => $valCalcul);
+                    $res[$component->getId()]= $res[$component->getId()] + [$criteriaTypes[0]->getId() => $valCalcul];
                 }
             }
         }
@@ -113,8 +108,12 @@ class MultiCriteriaAnalyseService {
         //(pds * value) / Somme(values)
         $componentCriterias = $this->componentCriteriaRepository->findBy(['component' => $component, 'criteria' => $criteria]) ;
         $value = $componentCriterias[0]->getValue();
-        $res = ($weight * $value)/$somme;
-        return $res;
+        if($somme != 0){
+            $res = ($weight * $value)/$somme;
+        }else{
+            $res = 0;
+        }
+        return abs($res);
     }
 
 
@@ -124,33 +123,45 @@ class MultiCriteriaAnalyseService {
         $sommeArrayNeg = array();
         $res = array();
 
-
         foreach ($componentsTypeValue as $composant => $value){
             $arrayPos[$composant] = 0.0;
             $arrayNeg[$composant] = 0.0;
-            $sommeArrayNeg[$this->componentRepository->findBy(['id' => $composant])[0]->getType()->getId()] = 0.0;
-            foreach($value as $value2){
-                foreach ($value2 as $crit => $valeurNet){
-                    $criteres = $this->criteriaTypeRepository->findBy(['id' => $crit]);
-                    $signe = null;
-                    foreach ($criteres as $critere){
-                        $signe = $critere->getIsPositive();
+            if (!array_key_exists($this->componentRepository->findBy(['id' => $composant])[0]->getType()->getId(),$sommeArrayNeg )){
+                $sommeArrayNeg[$this->componentRepository->findBy(['id' => $composant])[0]->getType()->getId()] = 0.0;
+            }
 
+            foreach ($value as $crit => $valeurNet){
+                $criteres = $this->criteriaTypeRepository->findBy(['id' => $crit]);
+                $signe = null;
+                foreach ($criteres as $critere){
+                    $signe = $critere->getIsPositive();
+                }
+                if ($signe){
+                    //Tableau des +
+                    $arrayPos[$composant] += $valeurNet;
+                } else {
+                    //Tableau des -
+                    $arrayNeg[$composant] += $valeurNet;
+                    $comp = $this->componentRepository->findBy(['id' => $composant]);
+                    /** @var $c Component*/
+                    foreach ($comp as $c){
+                        $sommeArrayNeg[$c->getType()->getId()] += $valeurNet;
                     }
-                    if ($signe){
-                        //Tableau des +
-                        $arrayPos[$composant] += $valeurNet;
+                }
 
-                    } else {
-                        //Tableau des -
-                        $arrayNeg[$composant] += $valeurNet;
-                        $types = $this->componentRepository->findBy(['id' => $composant])[0]->getType()->getId();
-                        /** @var $type Type */
-                        foreach ($types as $type){
-                            $sommeArrayNeg[$type->getId()] += $valeurNet;
+            }
+        }
 
-                        }
-                    }
+        $types = $this->typeRepository->findAll();
+        $sommeArrayNegInverse = array();
+        foreach ($types as $type){
+            $components = $this->componentRepository->findBy(['type' => $type->getId()]);
+            $sommeArrayNegInverse[$type->getId()] = 0.0;
+            foreach ($components as $component){
+                if ($arrayNeg[$component->getId()] == 0){
+                    $sommeArrayNegInverse[$type->getId()] += 1;
+                } else {
+                    $sommeArrayNegInverse[$type->getId()] += 1 / $arrayNeg[$component->getId()];
                 }
             }
         }
@@ -160,13 +171,16 @@ class MultiCriteriaAnalyseService {
             $sommePlus = $arrayPos[$component->getId()];
             $sommeMoins = $arrayNeg[$component->getId()];
 
-            $comp = $this->componentRepository->findBy(['id' => $component]);
-            var_dump($comp[0]->getType());
-            $inverseSommeMoins = 1 / $sommeArrayNeg[$comp[0]->getType()];
+            if (!array_key_exists($component->getType()->getId(), $res)){
+                $res[$component->getType()->getId()] = array();
+            }
 
-            $calcul = $sommePlus + ($sommeArrayNeg[$comp[0]->getType()] / ($sommeMoins * $inverseSommeMoins));
-            $array[$component->getId()] = $calcul;
-            array_push($res[$component->getType()], $array[$component->getId()]);
+            $calcul = $sommePlus + ($sommeArrayNeg[$component->getType()->getId()] / ($sommeMoins * $sommeArrayNegInverse[$component->getType()->getId()]));
+
+
+            //$array[$component->getId()] = $calcul;
+            dump($component->getId());
+            $res[$component->getType()->getId()] = $res[$component->getType()->getId()] + [$component->getId() => $calcul];
         }
 
         foreach($res as $typeId => $components){
