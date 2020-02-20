@@ -179,14 +179,12 @@ class MultiCriteriaAnalyseService {
 
 
             //$array[$component->getId()] = $calcul;
-            dump($component->getId());
             $res[$component->getType()->getId()] = $res[$component->getType()->getId()] + [$component->getId() => $calcul];
         }
 
-        foreach($res as $typeId => $components){
-            //var_dump($components);
+        foreach($res as $typeId => &$components){
             arsort($components);
-            //var_dump($components);
+            $res[$typeId] = $components;
         }
         return $res;
     }
