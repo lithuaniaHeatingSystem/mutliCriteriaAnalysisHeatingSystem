@@ -9,18 +9,18 @@
         </div>
         <div class="col text-md-right">
             <a href="{{ path('create_or_update_component', {'typeLabel': typeLabel}) }}" role="button"
-               class="btn btn-success">{% trans %}component.list.action.add{% endtrans %} {{ ('component.list.' ~ typeLabel)|trans }}</a>
+               class="btn badge-primary">{% trans %}component.list.action.add{% endtrans %} {{ ('component.list.' ~ typeLabel)|trans }}</a>
         </div>
     </div>
     <div class="row">
         <div class="table-responsive">
-            <table class="table table-dark">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">{% trans %}component.list.label{% endtrans %}</th>
                     <th scope="col">{% trans %}component.list.description{% endtrans %}</th>
                     <th scope="col">{% trans %}component.list.link{% endtrans %}</th>
-                    <th scope="col">{% trans %}component.list.type{% endtrans %}</th>
+                    <th scope="col">{% trans %}component.list.actions{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,15 +29,15 @@
                         <th scope="row">{{ component.label }}</th>
                         <td>{{ component.description }}</td>
                         <td><a href="{{ component.link }}"><i class="fa fa-link"></i></a></td>
-                        <td>{{ component.type }}</td>
                         <td>
-                            <a href="{{ path('component_delete', {'componentId': component.id, 'typeLabel': typeLabel}) }}"
-                               class="badge badge-danger">{% trans %}component.list.action.remove{% endtrans %}</a>
+
                             <a href="{{ path('create_or_update_component', {'componentId': component.id, 'typeLabel': typeLabel}) }}"
-                               class="badge badge-secondary">{% trans %}component.list.action.edit{% endtrans %}</a>
+                               class="badge badge-primary btn-block">{% trans %}component.list.action.edit{% endtrans %}</a>
                             <a href="{{ path('create_or_update_component_criteria', {'typeLabel': typeLabel, 'componentId': component.id}) }}"
-                               class="badge badge-secondary">{% trans %}component.list.action.edit_criteria{% endtrans %}</a>
-                        </td>
+                               class="badge badge-primary btn-block">{% trans %}component.list.action.edit_criteria{% endtrans %}</a>
+                            <a href="{{ path('component_delete', {'componentId': component.id, 'typeLabel': typeLabel}) }}"
+                               class="badge badge-danger btn-block">{% trans %}component.list.action.remove{% endtrans %}</a>
+                            </td>
                     </tr>
                 {% endfor %}
                 </tbody>

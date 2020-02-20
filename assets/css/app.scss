@@ -1,58 +1,12 @@
+$primary: #381859;
+$danger: #C03360;
+
+
 @import "~bootstrap/scss/bootstrap";
-
-
-
-
-
-$color1: #381859 !default;
-$color2: #C03360 !default;
-$color3: #8B2B7D !default;
-
-$fiveth-color: #F5F8FF !default;
-$edit-color: #4A78D2 !default;
-$remove-color: #C34A36 !default;
-$black-color: #000000 !default;
-$link-color: #000000 !default;
-
-/*
-
-html, body { min-height : 100vh; }
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-table {
-  border-radius: 10px;
-  background-color: rgba(147, 147, 147, 0.26);
-}
-.table th{
-  border:0;
-}
-.table-responsive{
-  margin:10px;
-}
-.navbar{
-background-color:  $secondary-color;
-  padding: 20px;
-}
-
-h1{
-  color:  $secondary-color;
-}
-
-.container{
-  height:100%;
-  padding-top : 20px;
-  margin-top : 20px;
-  flex : 1;
-}
-*/
 
 html, body { min-height : 100vh; }
 html{
-  background : linear-gradient($color1,$color2);
+  background : linear-gradient($primary,$danger);
 }
 body{
   width:80%;
@@ -60,40 +14,28 @@ body{
   display: flex;
   flex-direction: column;
 }
-
 .container{
   flex:1;
+  margin-top:20px;
 }
-
-.navbar{
-  padding: 20px;
-}
-
-.navbar a:hover{
-  color:$color1;
-}
-
-
 .navbar-brand{
   font-size:40px;
 }
-
-.navbar *{
-  color:  $color1;
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:hover, .navbar-brand *, .nav-tabs .nav-link, .nav-tabs .nav-link:hover {
+  color :$primary;
 }
-
+.underline_nav{
+  background : linear-gradient(45deg, $danger,$primary);
+  width:100%;
+  height:10px;
+}
+.dropdown-item:active{
+  background-color:white;
+}
 .button_edit_add{
-  background-color: $color1;
+  background-color: $primary;
   color:white;
 }
-
-.button_remove{
-  background-color: $color2;
-  color:white;
+.nav-tabs .nav-link.active, .nav-tabs .nav-link.active:hover{
+  color: $danger;
 }
-
-.badge a:hover{
-  color:white;
-}
-
-

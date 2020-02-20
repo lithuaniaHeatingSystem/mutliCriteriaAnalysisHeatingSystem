@@ -9,7 +9,7 @@
         </div>
         <div class="col text-md-right">
             <a href="{{ path('create_or_update_criteria') }}" role="button"
-               class="btn btn-success button_edit_add">{% trans %}criteria.list.action.add{% endtrans %}</a>
+               class="btn badge-primary ">{% trans %}criteria.list.action.add{% endtrans %}</a>
         </div>
     </div>
     <div class="row">
@@ -34,10 +34,11 @@
                             {{ ('component.list.' ~  criteriaType.type.label)|trans }}
                         {% endfor %}</td>
                         <td>
-                            <a href="{{ path('criteria_delete', {'id': criteria.id}) }}"
-                               class="badge button_remove">{% trans %}criteria.list.action.remove{% endtrans %}</a>
+
                             <a href="{{ path('create_or_update_criteria', {'criteriaId': criteria.id}) }}"
-                               class="badge button_edit_add">{% trans %}criteria.list.action.edit{% endtrans %}</a>
+                               class="badge badge-primary btn-block">{% trans %}criteria.list.action.edit{% endtrans %}</a>
+                            <a href="{{ path('criteria_delete', {'id': criteria.id}) }}"
+                               class="badge badge-danger btn-block">{% trans %}criteria.list.action.remove{% endtrans %}</a>
                         </td>
 
                     </tr>

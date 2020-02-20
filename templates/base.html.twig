@@ -13,7 +13,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light pb-3">
 
         <a class="navbar-brand" href="{{ path('home') }}">{% trans %}menu.name{% endtrans %}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -43,6 +43,7 @@
             </div>
         </div>
     </nav>
+    <div class="underline_nav"></div>
 </header>
 <div class="container">
     {% block body %}{% endblock %}

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-1 d-flex align-items-center">
             <a href="{{ path('create_or_update_component', {'componentId': form.vars.value.id, 'typeLabel':form.vars.value.type.label}) }}"
-               class="btn btn-primary m-1"><i class="fa fa-arrow-left"></i></a>
+               class="btn badge-primary btn-block m-1"><i class="fa fa-arrow-left"></i></a>
         </div>
         <div class="col-11">
             <h1>{% trans %}component.add.criterias{% endtrans %}</h1>
@@ -27,9 +27,10 @@
             </div>
         {% endfor %}
         <div class="row">
+
+            <button type="submit" class="btn badge-primary btn-block m-1">{{ 'component.add.validate'|trans }}</button>
             <a href="{{ path('component_list', {'typeLabel': form.vars.value.type.label}) }}"
-               class="btn btn-danger m-1">{{ 'component.add.cancel'|trans }}</a>
-            <button type="submit" class="btn btn-success m-1">{{ 'component.add.validate'|trans }}</button>
+               class="btn badge-danger btn-block m-1">{{ 'component.add.cancel'|trans }}</a>
         </div>
         {{ form_end(form) }}
     </div>

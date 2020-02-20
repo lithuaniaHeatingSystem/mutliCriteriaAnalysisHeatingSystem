@@ -74,6 +74,7 @@ component:
         description: Description
         link: Link
         type: Type
+        actions: Actions
         radiator: radiators
         valve: valves
         pipe: pipes

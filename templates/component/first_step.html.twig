@@ -11,9 +11,9 @@
         {{ form_start(form, {'attr': {'class': 'w-100'}}) }}
         {{ form_widget(form) }}
         <div class="row">
+            <button type="submit" class="btn badge-primary btn-block m-1">{{ 'component.add.next'|trans }}</button>
             <a href="{{ path('component_list', {'typeLabel': form.vars.value.type.label}) }}"
-               class="btn btn-danger m-1">{{ 'component.add.cancel'|trans }}</a>
-            <button type="submit" class="btn btn-success m-1">{{ 'component.add.next'|trans }}</button>
+               class="btn badge-danger btn-block m-1">{{ 'component.add.cancel'|trans }}</a>
         </div>
         {{ form_end(form) }}
     </div>
