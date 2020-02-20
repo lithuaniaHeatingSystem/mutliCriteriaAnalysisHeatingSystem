@@ -23,16 +23,16 @@ class ComponentFirstType extends AbstractType
                 'required' => false,
                 'label' => 'component.form.description',
             ])
-            ->add('type', EntityType::class, [
-                'required' => false,
-                'class' => Type::class,
-                'label' => 'component.form.type',
-                'disabled' => true,
-                'choice_label' => function ($type) {
-                    return 'component.form.'.$type->getLabel();
-                },
-                'choice_translation_domain' => 'messages',
-            ])
+//            ->add('type', EntityType::class, [
+//                'required' => false,
+//                'class' => Type::class,
+//                'label' => 'component.form.type',
+//                'disabled' => true,
+//                'choice_label' => function ($type) {
+//                    return 'component.form.'.$type->getLabel();
+//                },
+//                'choice_translation_domain' => 'messages',
+//            ])
             ->add('link', TextType::class, [
                 'required' => false,
                 'label' => 'component.form.link',

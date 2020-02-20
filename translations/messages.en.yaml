@@ -1,5 +1,5 @@
 menu:
-    name: Heating system
+    name: Multi criteria analysis
     result: Result
     component:
         name: Components
@@ -48,10 +48,18 @@ component:
         pipe: Pipe
         thermostatic_valve: Thermostatic valve
         circulation_pump: Circulation pump
+        name:
+            radiator: radiator
+            valve: valve
+            pipe: pipe
+            thermostatic_valve: thermostatic valve
+            circulation_pump: circulation pump
     add:
         criterias: Set value for each criterias
         title: Create
         next: Next
+        cancel: Cancel
+        return: <-
         validate: Validate
     edit:
         title: Edit
@@ -59,6 +67,7 @@ component:
         action:
             remove: Remove
             edit: Edit
+            edit_criteria: Edit criteria
             add: Add
         title: List of %type%
         label: Label
@@ -99,3 +108,4 @@ result:
         thermostatic_valve: Best thermostatic valves
         valve: Best valves
         circulation_pump: Best circulation pumps
+        title: Result of %createdAt%
