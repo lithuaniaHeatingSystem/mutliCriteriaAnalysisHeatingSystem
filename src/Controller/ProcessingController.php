@@ -7,12 +7,18 @@ use App\Entity\Type;
 use App\Form\WeightCollectionType;
 use App\Model\WeightCollectionModel;
 use App\Model\WeightModel;
+use App\Repository\ComponentCriteriaRepository;
+use App\Repository\CriteriaRepository;
+use App\Repository\CriteriaTypeRepository;
 use App\Repository\TypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhpParser\Node\Expr\AssignOp\Mul;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\MultiCriteriaAnalyseService;
+use App\Repository\ComponentRepository;
 
 class ProcessingController extends AbstractController
 {
@@ -22,7 +28,7 @@ class ProcessingController extends AbstractController
      *
      * @return Response
      */
-    public function form(Request $request)
+    public function form(Request $request, MultiCriteriaAnalyseService $multiCriteriaAnalyseService)
     {
         $CriteriaTypeRepository = $this->getDoctrine()->getRepository(CriteriaType::class);
         $criteriaTypes = $CriteriaTypeRepository->findAll();
@@ -50,25 +56,23 @@ class ProcessingController extends AbstractController
                 $weightModels = $form->getData()->getWeightModels();
 
             /** @var WeightModel $data */
-                foreach($types as $type){
-                    var_dump($type.'    : ');
-                    $totalWeight = 0;
-                    foreach ($weightModels as $data){
-                        if($data->getCriteriaType()->getType() ==  $type){
-                            $totalWeight += $data->getWeight();
-                        }
-                    }
-                    foreach ($weightModels  as $data){
-                        if($data->getCriteriaType()->getType() ==  $type){
-                            $data->setWeight($data->getWeight()/$totalWeight);
-                        }
+            foreach($types as $type){
+                $totalWeight = 0;
+                foreach ($weightModels as $data){
+                    if($data->getCriteriaType()->getType() ==  $type){
+                        $totalWeight += $data->getWeight();
                     }
                 }
+                foreach ($weightModels  as $data){
+                    if($data->getCriteriaType()->getType() ==  $type){
+                        $data->setWeight($data->getWeight()/$totalWeight);
+                    }
+                }
+            }
 
 
-
-
-                /** TODO call processing service **/
+            $titi = $multiCriteriaAnalyseService->calculCriteria((new WeightCollectionModel())->setWeightModels($weightModels));
+            /** TODO call processing service **/
 
         }
 

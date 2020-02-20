@@ -2,12 +2,14 @@
 
 namespace App\Model;
 
+use App\Entity\Criteria;
 use App\Entity\CriteriaType;
+use App\Entity\Type;
 
 class WeightModel
 {
     /**
-     * @var integer
+     * @var float
      */
     private $weight;
 
@@ -19,7 +21,7 @@ class WeightModel
     /**
      * @return integer
      */
-    public function getWeight()
+    public function getWeight() : float
     {
         return $this->weight;
     }
@@ -29,7 +31,7 @@ class WeightModel
      *
      * @return WeightModel
      */
-    public function setWeight($weight): self
+    public function setWeight(float $weight): self
     {
         $this->weight = $weight;
 
@@ -54,5 +56,9 @@ class WeightModel
         $this->criteriaType = $criteriaType;
 
         return $this;
+    }
+
+    public function isGoodCriteriaType(Criteria $criteria, Type $type){
+        return $this->criteriaType->getCriteria()->getId() == $criteria->getId() && $this->criteriaType->getType()->getId() == $type->getId();
     }
 }
