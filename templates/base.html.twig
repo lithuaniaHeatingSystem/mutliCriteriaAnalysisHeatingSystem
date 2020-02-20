@@ -11,7 +11,8 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light"  style="background-color: #e3f2fd;">
+
         <a class="navbar-brand" href="{{ path('home') }}">{% trans %}menu.name{% endtrans %}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +40,7 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container mt-5">
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}

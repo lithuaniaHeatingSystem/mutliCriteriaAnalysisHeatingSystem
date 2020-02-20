@@ -9,7 +9,7 @@
         </div>
         <div class="col text-md-right">
             <a href="{{ path('create_or_update_component', {'typeLabel': typeLabel}) }}" role="button"
-               class="btn btn-success">{% trans %}component.list.action.add{% endtrans %}</a>
+               class="btn btn-success">{% trans %}component.list.action.add{% endtrans %} {{ ('component.list.' ~ typeLabel)|trans }}</a>
         </div>
     </div>
     <div class="row">
