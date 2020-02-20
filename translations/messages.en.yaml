@@ -1,5 +1,6 @@
 menu:
     name: Heating system
+    result: Result
     component:
         name: Components
         radiator: Radiator
@@ -22,6 +23,7 @@ criteria:
         label: Name
         description: Description
         unit: Unit
+        component: Component
         actions: Actions
         action:
             add: Add criteria
@@ -48,17 +50,21 @@ component:
         circulation_pump: Circulation pump
     add:
         criterias: Set value for each criterias
-        title: Create component
+        title: Create
         next: Next
         validate: Validate
     edit:
-        title: Edit component
+        title: Edit
     list:
         action:
             remove: Remove
             edit: Edit
             add: Add
         title: List of %type%
+        label: Label
+        description: Description
+        link: Link
+        type: Type
         radiator: radiators
         valve: valves
         pipe: pipes
@@ -77,3 +83,19 @@ processing:
             unit: Unit
             action: Choose weight
         submit: Submit
+
+result:
+    list:
+        title: Result list
+        name: Result list
+        created_at: Created
+        actions: Actions
+        action:
+            new: Create new result
+            show: Show
+    show:
+        radiator: Best Radiators
+        pipe: Best pipes
+        thermostatic_valve: Best thermostatic valves
+        valve: Best valves
+        circulation_pump: Best circulation pumps

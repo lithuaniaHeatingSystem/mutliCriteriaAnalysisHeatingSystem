@@ -21,6 +21,7 @@ class CriteriaController extends AbstractController
         //@TODO paginate with pager fanta
         return $this->render('criteria/list.html.twig', [
             'criterias' => $this->getDoctrine()->getRepository(Criteria::class)->findAll(),
+            'types' => $this->getDoctrine()->getRepository(Type::class)->findAll(),
         ]);
     }
 

@@ -20,6 +20,7 @@
                     <th scope="col">{% trans %}criteria.list.label{% endtrans %}</th>
                     <th scope="col">{% trans %}criteria.list.description{% endtrans %}</th>
                     <th scope="col">{% trans %}criteria.list.unit{% endtrans %}</th>
+                    <th scope="col">{% trans %}criteria.list.component{% endtrans %}</th>
                     <th scope="col">{% trans %}criteria.list.actions{% endtrans %}</th>
                 </tr>
                 </thead>
@@ -29,12 +30,16 @@
                         <th scope="row">{{ criteria.label }}</th>
                         <td>{{ criteria.description }}</td>
                         <td>{{ criteria.unit }}</td>
+                        <td>{% for criteriaType in criteria.criteriaTypes %}
+                            {{ ('component.list.' ~  criteriaType.type.label)|trans }}
+                        {% endfor %}</td>
                         <td>
                             <a href="{{ path('criteria_delete', {'id': criteria.id}) }}"
                                class="badge badge-danger">{% trans %}criteria.list.action.remove{% endtrans %}</a>
                             <a href="{{ path('create_or_update_criteria', {'criteriaId': criteria.id}) }}"
                                class="badge badge-secondary">{% trans %}criteria.list.action.edit{% endtrans %}</a>
                         </td>
+
                     </tr>
                 {% endfor %}
                 </tbody>
