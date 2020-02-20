@@ -34,7 +34,7 @@
                 {% for key, component in components %}
                     <li class="pt-2 pb-2">#{{ (key+1) }}
                         <a href="{{ path('create_or_update_component', {'componentId': component['object'].id, 'typeLabel': entityTypes[type].label}) }}">{{ component['object'].label }}</a>
-                          {{ 'show.result.value'|trans ~ component['value'] }}
+                          ({{ 'result.show.value'|trans }} : {{ component['value'] }})
                     </li>
                 {% endfor %}
             </ul>
