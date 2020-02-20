@@ -17,7 +17,7 @@ class WeightModel
      * @var CriteriaType
      */
     private $criteriaType;
-    
+
     /**
      * @return integer
      */

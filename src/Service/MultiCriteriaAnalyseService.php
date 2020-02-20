@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\Component;
-use App\Entity\ComponentCriteria;
 use App\Entity\Criteria;
 use App\Entity\Type;
 use App\Form\CriteriaType;
@@ -59,27 +58,14 @@ class MultiCriteriaAnalyseService {
 
     public function calculCriteria(WeightCollectionModel $weigthModels)
     {
-//        //etape 1
-//        //etape 2
-//        //etape 3
+        $res = array();
 
-        $criteriaTypes = $this->criteriaTypeRepository->findAll();
-
-        $i = 0;
-        $weigthModelsCollection = new WeightCollectionModel();
-        $array = array();
-        /** @var $criteriaTypes CriteriaType*/
-        foreach ($criteriaTypes as $criteria){
-            $array[$i] = new WeightModel($i, $criteria);
-            $i++;
-        }
-
-        $weigthModelsCollection->setWeightModels($array);
-
-        $this->calculBaseCriteria($weigthModelsCollection);
+        $res = $this->calculBaseCriteria($weigthModels);
+        $res = $this->finalCalcul($res);
 //        //etape 4
 //        //etape 5
 //        //etape 6
+        return $res;
     }
 
     public function getAllTypes() {
@@ -106,14 +92,17 @@ class MultiCriteriaAnalyseService {
                 }
 
                 $components = $this->componentRepository->findBy(['type' => $type->getId()]);
+                $arrayValue = array();
                 foreach ($components as $component){
+                    if (!(array_key_exists($component->getId(), $res))){
+                        $res[$component->getId()] = array();
+                    }
                     //Retrouver bon weight from CriteriaType
                     $valCalcul = $this->calculValueNetComponent($criteria, $weight, $sommeCritType, $component);
                     //Stocker la valeur au bon endroit component-criteria => valueNORMALIZE
-                    $componentCriterias = $this->componentCriteriaRepository->findBy(['component_id' => $component->getId(), 'criteria_id' => $criteria->getId()]) ;
-                    $res[$componentCriterias[0]->getId()] = $valCalcul;
-                    var_dump($componentCriterias[0]->getId());
-                    var_dump($res[$componentCriterias[0]->getId()]);
+                    $criteriaTypes = $this->criteriaTypeRepository->findBy(['type' => $type->getId(), 'criteria' => $criteria->getId()]);
+                    $arrayValue= array($criteriaTypes[0]->getId() => $valCalcul);
+                    //$res[$component->getId()] = [$criteriaTypes[0]->getId() => $valCalcul];
                 }
             }
         }
@@ -122,18 +111,77 @@ class MultiCriteriaAnalyseService {
 
     public function calculValueNetComponent(Criteria $criteria, $weight, $somme, Component $component){
         //(pds * value) / Somme(values)
-        $componentCriterias = $this->componentCriteriaRepository->findBy(['component_id' => $component->getId(), 'criteria_id' => $criteria->getId()]) ;
+        $componentCriterias = $this->componentCriteriaRepository->findBy(['component' => $component, 'criteria' => $criteria]) ;
         $value = $componentCriterias[0]->getValue();
         $res = ($weight * $value)/$somme;
         return $res;
     }
 
 
+    public function finalCalcul(Array $componentsTypeValue){
+        $arrayPos = array();
+        $arrayNeg = array();
+        $sommeArrayNeg = array();
+        $res = array();
+
+
+        foreach ($componentsTypeValue as $composant => $value){
+            $arrayPos[$composant] = 0.0;
+            $arrayNeg[$composant] = 0.0;
+            $sommeArrayNeg[$this->componentRepository->findBy(['id' => $composant])[0]->getType()->getId()] = 0.0;
+            foreach($value as $value2){
+                foreach ($value2 as $crit => $valeurNet){
+                    $criteres = $this->criteriaTypeRepository->findBy(['id' => $crit]);
+                    $signe = null;
+                    foreach ($criteres as $critere){
+                        $signe = $critere->getIsPositive();
+
+                    }
+                    if ($signe){
+                        //Tableau des +
+                        $arrayPos[$composant] += $valeurNet;
+
+                    } else {
+                        //Tableau des -
+                        $arrayNeg[$composant] += $valeurNet;
+                        $types = $this->componentRepository->findBy(['id' => $composant])[0]->getType()->getId();
+                        /** @var $type Type */
+                        foreach ($types as $type){
+                            $sommeArrayNeg[$type->getId()] += $valeurNet;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        /** @var $component Component */
+        foreach ($this->componentRepository->findAll() as $component){
+            $sommePlus = $arrayPos[$component->getId()];
+            $sommeMoins = $arrayNeg[$component->getId()];
+
+            $comp = $this->componentRepository->findBy(['id' => $component]);
+            var_dump($comp[0]->getType());
+            $inverseSommeMoins = 1 / $sommeArrayNeg[$comp[0]->getType()];
+
+            $calcul = $sommePlus + ($sommeArrayNeg[$comp[0]->getType()] / ($sommeMoins * $inverseSommeMoins));
+            $array[$component->getId()] = $calcul;
+            array_push($res[$component->getType()], $array[$component->getId()]);
+        }
+
+        foreach($res as $typeId => $components){
+            //var_dump($components);
+            arsort($components);
+            //var_dump($components);
+        }
+        return $res;
+    }
+
     public function sommeCritere(Criteria $critere, Type $type){
-        $components = $this->componentRepository->findBy(['type' => $type->getId()]);
+        $components = $this->componentRepository->findBy(['type' => $type]);
         $somme = 0;
         foreach ($components as $component){
-            $compCrits = $this->componentCriteriaRepository->findBy(['component_id' => $component->getId(), 'criteria_id' => $critere->getId()]);
+            $compCrits = $this->componentCriteriaRepository->findBy(['component' => $component, 'criteria' => $critere]);
             //Une seule ligne
             foreach ($compCrits as $compCrit){
                 $somme += $compCrit->getValue();
