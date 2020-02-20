@@ -64,10 +64,8 @@ class AppFixtures extends Fixture
 
         $maxPressureCriteria = (new Criteria)->setLabel("Max pressure")->setDescription("Max pressure")->setUnit("bar");
         $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($heatingType)->setIsPositive(true));
-        $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($pipeType)->setIsPositive(true));
         $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($thermostaticValveType)->setIsPositive(true));
         $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($valveType)->setIsPositive(true));
-        $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($circulationPumpType)->setIsPositive(true));
         $manager->persist($maxPressureCriteria);
         $manager->flush();
 
