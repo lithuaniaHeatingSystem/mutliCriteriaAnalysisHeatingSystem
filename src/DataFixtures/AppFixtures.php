@@ -33,7 +33,6 @@ class AppFixtures extends Fixture
         $priceCriteria->addCriteriaType((new CriteriaType())->setType($thermostaticValveType)->setIsPositive(false));
         $priceCriteria->addCriteriaType((new CriteriaType())->setType($valveType)->setIsPositive(false));
         $priceCriteria->addCriteriaType((new CriteriaType())->setType($circulationPumpType)->setIsPositive(false));
-        $priceCriteria->addCriteriaType((new CriteriaType())->setType($pipeType)->setIsPositive(false));
         $manager->persist($priceCriteria);
         $manager->flush();
 
@@ -45,11 +44,6 @@ class AppFixtures extends Fixture
         $thermalTransmissionCriteria = (new Criteria)->setLabel("Thermal transmission")->setDescription("Thermal transmission")->setUnit("W/m2K");
         $thermalTransmissionCriteria->addCriteriaType((new CriteriaType())->setType($heatingType)->setIsPositive(true));
         $manager->persist($thermalTransmissionCriteria);
-        $manager->flush();
-
-        $reliabilityCriteria = (new Criteria)->setLabel("Reliability")->setDescription("Reliability")->setUnit("Cycles");
-        $reliabilityCriteria->addCriteriaType((new CriteriaType())->setType($heatingType)->setIsPositive(true));
-        $manager->persist($reliabilityCriteria);
         $manager->flush();
 
         $sizeM2Criteria = (new Criteria)->setLabel("Size")->setDescription("Size")->setUnit("m2");
@@ -191,7 +185,6 @@ class AppFixtures extends Fixture
         $altimaVerticalHMComponent = (new Component)->setLabel("Altima Vertical HM-160-030")->setDescription("Smooth surface or worked in relief: ideal in housing (entry, living, room...) as in tertiary character")->setLink("https://acova.fr/radiateur-decoratif-chauffage-central/altima-vertical-38264")->setType($heatingType);
         $altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(1131)->setCriteria($priceCriteria));
         $altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(448)->setCriteria($thermalTransmissionCriteria));
-        $altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(1)->setCriteria($reliabilityCriteria));
         $altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(0,491965)->setCriteria($sizeM2Criteria));
         $altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(100)->setCriteria($designCriteria));
         $altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(37,7)->setCriteria($weightCriteria));
@@ -203,7 +196,6 @@ class AppFixtures extends Fixture
         $karenaSvhComponent = (new Component)->setLabel("Karéna SVH-180-030")->setDescription("A modern design signed King & Miranda which will sublimate your interior. A clean line for a lighter profile")->setLink("https://acova.fr/radiateur-decoratif-chauffage-central/karena-38361")->setType($heatingType);
         $karenaSvhComponent->addComponentCriteria((new ComponentCriteria())->setValue(820)->setCriteria($priceCriteria));
         $karenaSvhComponent->addComponentCriteria((new ComponentCriteria())->setValue(490)->setCriteria($thermalTransmissionCriteria));
-        $karenaSvhComponent->addComponentCriteria((new ComponentCriteria())->setValue(1)->setCriteria($reliabilityCriteria));
         $karenaSvhComponent->addComponentCriteria((new ComponentCriteria())->setValue(0,504)->setCriteria($sizeM2Criteria));
         $karenaSvhComponent->addComponentCriteria((new ComponentCriteria())->setValue(60)->setCriteria($designCriteria));
         $karenaSvhComponent->addComponentCriteria((new ComponentCriteria())->setValue(11,3)->setCriteria($weightCriteria));
@@ -215,7 +207,6 @@ class AppFixtures extends Fixture
         $decoformComponent = (new Component)->setLabel("Decoform FWF-013-100")->setDescription("Retro industrial design with fins. Ideal radiator for bay windows")->setLink("https://acova.fr/radiateur-decoratif-chauffage-central/decoform-155577")->setType($heatingType);
         $decoformComponent->addComponentCriteria((new ComponentCriteria())->setValue(444)->setCriteria($priceCriteria));
         $decoformComponent->addComponentCriteria((new ComponentCriteria())->setValue(246)->setCriteria($thermalTransmissionCriteria));
-        $decoformComponent->addComponentCriteria((new ComponentCriteria())->setValue(1)->setCriteria($reliabilityCriteria));
         $decoformComponent->addComponentCriteria((new ComponentCriteria())->setValue(0,13)->setCriteria($sizeM2Criteria));
         $decoformComponent->addComponentCriteria((new ComponentCriteria())->setValue(70)->setCriteria($designCriteria));
         $decoformComponent->addComponentCriteria((new ComponentCriteria())->setValue(6,2)->setCriteria($weightCriteria));
@@ -227,7 +218,6 @@ class AppFixtures extends Fixture
         $kadraneKaComponent = (new Component)->setLabel("Kadrane KA-097-040")->setDescription("A square line perfectly suited to contemporary interiors. Ideal in Claustra. A technoline finish option that will give a modern touch to your room")->setLink("https://acova.fr/radiateur-decoratif-chauffage-central/kadrane-38366")->setType($heatingType);
         $kadraneKaComponent->addComponentCriteria((new ComponentCriteria())->setValue(590)->setCriteria($priceCriteria));
         $kadraneKaComponent->addComponentCriteria((new ComponentCriteria())->setValue(380)->setCriteria($thermalTransmissionCriteria));
-        $kadraneKaComponent->addComponentCriteria((new ComponentCriteria())->setValue(1)->setCriteria($reliabilityCriteria));
         $kadraneKaComponent->addComponentCriteria((new ComponentCriteria())->setValue(0,3884)->setCriteria($sizeM2Criteria));
         $kadraneKaComponent->addComponentCriteria((new ComponentCriteria())->setValue(70)->setCriteria($designCriteria));
         $kadraneKaComponent->addComponentCriteria((new ComponentCriteria())->setValue(7,1)->setCriteria($weightCriteria));
@@ -239,7 +229,6 @@ class AppFixtures extends Fixture
         $altaiVerticalComponent = (new Component)->setLabel("Altai Vertical HYD-200-026")->setDescription("A very modern and graphic refined design, linked to the narrowness of its flat tubes. Extra-flat, Altai offers a very low projection on the wall, even on double models")->setLink("https://acova.fr/radiateur-decoratif-chauffage-central/altai-vertical-38285")->setType($heatingType);
         $altaiVerticalComponent->addComponentCriteria((new ComponentCriteria())->setValue(784)->setCriteria($priceCriteria));
         $altaiVerticalComponent->addComponentCriteria((new ComponentCriteria())->setValue(900)->setCriteria($thermalTransmissionCriteria));
-        $altaiVerticalComponent->addComponentCriteria((new ComponentCriteria())->setValue(1)->setCriteria($reliabilityCriteria));
         $altaiVerticalComponent->addComponentCriteria((new ComponentCriteria())->setValue(0,528)->setCriteria($sizeM2Criteria));
         $altaiVerticalComponent->addComponentCriteria((new ComponentCriteria())->setValue(60)->setCriteria($designCriteria));
         $altaiVerticalComponent->addComponentCriteria((new ComponentCriteria())->setValue(46,6)->setCriteria($weightCriteria));
