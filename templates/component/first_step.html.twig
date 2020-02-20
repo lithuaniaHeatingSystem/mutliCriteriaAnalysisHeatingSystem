@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ (form.vars.value.id ? 'component.edit.title':'component.add.title')|trans }} {{ ('component.form.name.' ~ form.vars.value.type.label)|trans }}{{ form.vars.value.id ? ' : ' ~ form.vars.value.label : '' }} {% endblock %}
+
 {% block body %}
     <div class="row">
-        <h1>{{ (form.vars.value.id ? 'component.edit.title':'component.add.title')|trans }} {{ ('component.list.' ~ form.vars.value.type.label)|trans }} </h1>
+        <h1>{{ (form.vars.value.id ? 'component.edit.title':'component.add.title')|trans }} {{ ('component.form.name.' ~ form.vars.value.type.label)|trans }}
+            <strong>{{ form.vars.value.id ? ' : ' ~ form.vars.value.label : '' }}</strong></h1>
     </div>
     <div class="row">
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'class': 'w-100'}}) }}
         {{ form_widget(form) }}
-        <button type="submit" class="btn btn-success">{% trans %}component.add.next{% endtrans %}</button>
+        <div class="row">
+            <button type="submit" class="btn badge-primary btn-block m-1">{{ 'component.add.next'|trans }}</button>
+            <a href="{{ path('component_list', {'typeLabel': form.vars.value.type.label}) }}"
+               class="btn badge-danger btn-block m-1">{{ 'component.add.cancel'|trans }}</a>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -1,1 +1,41 @@
+$primary: #381859;
+$danger: #C03360;
+
+
 @import "~bootstrap/scss/bootstrap";
+
+html, body { min-height : 100vh; }
+html{
+  background : linear-gradient($primary,$danger);
+}
+body{
+  width:80%;
+  margin:auto;
+  display: flex;
+  flex-direction: column;
+}
+.container{
+  flex:1;
+  margin-top:20px;
+}
+.navbar-brand{
+  font-size:40px;
+}
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:hover, .navbar-brand *, .nav-tabs .nav-link, .nav-tabs .nav-link:hover {
+  color :$primary;
+}
+.underline_nav{
+  background : linear-gradient(45deg, $danger,$primary);
+  width:100%;
+  height:10px;
+}
+.dropdown-item:active{
+  background-color:white;
+}
+.button_edit_add{
+  background-color: $primary;
+  color:white;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-link.active:hover{
+  color: $danger;
+}

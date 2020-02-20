@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'component.add.criterias'|trans }}{% endblock %}
 {% block body %}
     <div class="row">
-        <h1>{% trans %}component.add.criterias{% endtrans %}</h1>
-    </div>
-    <div>
-        <h3>Component : {{ form.vars.value.label }}, type: {{ form.vars.value.type }}</h3>
+        <div class="col-1 d-flex align-items-center">
+            <a href="{{ path('create_or_update_component', {'componentId': form.vars.value.id, 'typeLabel':form.vars.value.type.label}) }}"
+               class="btn badge-primary btn-block m-1"><i class="fa fa-arrow-left"></i></a>
+        </div>
+        <div class="col-11">
+            <h1>{% trans %}component.add.criterias{% endtrans %}</h1>
+            <h3>Component : {{ form.vars.value.label }},
+                type: {{ ('component.form.name.' ~ form.vars.value.type.label)|trans }}</h3>
+        </div>
     </div>
     <div class="row">
         {{ form_start(form, {'attr': {'class': 'w-100'}}) }}
@@ -20,7 +26,12 @@
                 </div>
             </div>
         {% endfor %}
-        <button type="submit" class="btn btn-success">{% trans %}component.add.validate{% endtrans %}</button>
+        <div class="row">
+
+            <button type="submit" class="btn badge-primary btn-block m-1">{{ 'component.add.validate'|trans }}</button>
+            <a href="{{ path('component_list', {'typeLabel': form.vars.value.type.label}) }}"
+               class="btn badge-danger btn-block m-1">{{ 'component.add.cancel'|trans }}</a>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

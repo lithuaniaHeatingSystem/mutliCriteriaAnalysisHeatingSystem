@@ -16,7 +16,7 @@
             {%  endfor %}
         </div>
     </nav>
-    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-content mb-4" id="nav-tabContent">
         {%  for type in types %}
             {% if loop.first %}
                <div class="tab-pane fade show active" id={{"nav-" ~ type }} role="tabpanel" aria-labelledby={{"nav-" ~ type ~ "-tab" }}>
@@ -34,7 +34,7 @@
         {% endfor %}
 
     </div>
-    <button type="submit" class="btn  btn-success">{% trans %}processing.form.submit{% endtrans %}</button>
+    <button type="submit" class="btn badge-primary btn-block">{% trans %}processing.form.submit{% endtrans %}</button>
     {{ form_end(form) }}
 {% endblock %}
 {% block javascripts %}
