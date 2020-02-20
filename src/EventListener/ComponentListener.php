@@ -24,9 +24,9 @@ class ComponentListener
         }
         $entityManager = $args->getObjectManager();
         $criteriaTypes = $entityManager->getRepository(CriteriaType::class)->findBy(['type' => $entity->getType()]);
-        foreach ($criteriaTypes as $type) {
-            if (!$entity->getComponentCriterias()->contains($type)) {
-                $entity->addComponentCriteria((new ComponentCriteria())->setCriteria($type->getCriteria())->setValue(1));
+        foreach ($criteriaTypes as $criteriaType) {
+            if (!$entity->getCriterias()->contains($criteriaType->getCriteria())) {
+                $entity->addComponentCriteria((new ComponentCriteria())->setCriteria($criteriaType->getCriteria())->setValue(1));
             }
             $entityManager->persist($entity);
         }

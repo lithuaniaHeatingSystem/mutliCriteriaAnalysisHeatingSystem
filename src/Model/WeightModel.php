@@ -58,6 +58,12 @@ class WeightModel
         return $this;
     }
 
+    /**
+     * @param Criteria $criteria
+     * @param Type     $type
+     *
+     * @return bool
+     */
     public function isGoodCriteriaType(Criteria $criteria, Type $type){
         return $this->criteriaType->getCriteria()->getId() == $criteria->getId() && $this->criteriaType->getType()->getId() == $type->getId();
     }
