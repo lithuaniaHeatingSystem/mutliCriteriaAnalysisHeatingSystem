@@ -3,22 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\CriteriaType;
+use App\Entity\Result;
 use App\Entity\Type;
 use App\Form\WeightCollectionType;
 use App\Model\WeightCollectionModel;
 use App\Model\WeightModel;
-use App\Repository\ComponentCriteriaRepository;
-use App\Repository\CriteriaRepository;
-use App\Repository\CriteriaTypeRepository;
-use App\Repository\TypeRepository;
+use App\Service\MultiCriteriaAnalyseService;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhpParser\Node\Expr\AssignOp\Mul;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\MultiCriteriaAnalyseService;
-use App\Repository\ComponentRepository;
 
 class ProcessingController extends AbstractController
 {
@@ -46,39 +41,43 @@ class ProcessingController extends AbstractController
         }
 
 
-            $form = $this->createForm(WeightCollectionType::class,
-                (new WeightCollectionModel())->setWeightModels($weightModels));
+        $form = $this->createForm(WeightCollectionType::class,
+            (new WeightCollectionModel())->setWeightModels($weightModels));
 
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $weightModels = $form->getData()->getWeightModels();
+            $weightModels = $form->getData()->getWeightModels();
 
             /** @var WeightModel $data */
-            foreach($types as $type){
+            foreach ($types as $type) {
                 $totalWeight = 0;
-                foreach ($weightModels as $data){
-                    if($data->getCriteriaType()->getType() ==  $type){
+                foreach ($weightModels as $data) {
+                    if ($data->getCriteriaType()->getType() == $type) {
                         $totalWeight += $data->getWeight();
                     }
                 }
-                foreach ($weightModels  as $data){
-                    if($data->getCriteriaType()->getType() ==  $type){
-                        $data->setWeight($data->getWeight()/$totalWeight);
+                foreach ($weightModels as $data) {
+                    if ($data->getCriteriaType()->getType() == $type) {
+                        $data->setWeight($data->getWeight() / $totalWeight);
                     }
                 }
             }
 
 
-            $titi = $multiCriteriaAnalyseService->calculCriteria((new WeightCollectionModel())->setWeightModels($weightModels));
-            /** TODO call processing service **/
+            $resultArray = $multiCriteriaAnalyseService->calculCriteria((new WeightCollectionModel())->setWeightModels($weightModels));
+            $em = $this->getDoctrine()->getManager();
+            $result = (new Result())->setResult(serialize($resultArray))->setCreatedAt(new \DateTime());
+            $em->persist($result);
+            $em->flush();
 
+            return $this->redirect($this->generateUrl('result_show', ['resultId' => $result->getId()]));
         }
 
         return $this->render('processing/form.html.twig', [
             'form' => $form->createView(),
-            'types' => $types
+            'types' => $types,
         ]);
     }
 }
