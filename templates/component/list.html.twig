@@ -28,7 +28,7 @@
                     <tr>
                         <th scope="row">{{ component.label }}</th>
                         <td>{{ component.description }}</td>
-                        <td>{{ component.link }}</td>
+                        <td><a href="{{ component.link }}"><i class="fa fa-link"></i></a></td>
                         <td>{{ component.type }}</td>
                         <td>
                             <a href="{{ path('component_delete', {'componentId': component.id, 'typeLabel': typeLabel}) }}"
