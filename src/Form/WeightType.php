@@ -7,6 +7,7 @@ use App\Model\WeightModel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,14 +16,8 @@ class WeightType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('weight', IntegerType::class, [
+            ->add('weight', RangeType::class, [
                 'required' => false,
-            ])
-            ->add('criteriaType', EntityType::class, [
-                'class' => CriteriaType::class,
-                'required' => false,
-                'multiple' => false,
-                'disabled' => true,
             ]);
     }
 
