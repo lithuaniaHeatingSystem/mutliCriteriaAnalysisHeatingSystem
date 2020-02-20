@@ -110,3 +110,5 @@ result:
         valve: Best valves
         circulation_pump: Best circulation pumps
         title: Result of %createdAt%
+        result:
+            value: Relative significances or priorities of alternative

@@ -54,10 +54,13 @@ class ResultController extends AbstractController
         foreach ($typeComponents as $key => $values) {
             $type = $this->getDoctrine()->getRepository(Type::class)->find($key);
             count($types) === 0 ? $types = [$key => $type] : $types += [$key => $type];
-            foreach ($typeComponents[ $key ] as $keyIdComponent => $componentId) {
-                $typeComponents[ $key ][ $keyIdComponent ] = $this->getDoctrine()->getRepository(Component::class)->find($componentId);
+            foreach ($typeComponents[ $key ] as $keyIdComponent => $value) {
+                $typeComponents[ $key ][ $keyIdComponent ] = ['object' => $this->getDoctrine()->getRepository(Component::class)->find($keyIdComponent), 'value' => $value];
             }
         }
+
+//        var_dump($typeComponents);
+//        die;
 
         return $this->render('result/show.html.twig', [
             'typeComponents' => $typeComponents,
