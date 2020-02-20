@@ -86,7 +86,7 @@ processing:
 
 result:
     list:
-        tile: Result list
+        title: Result list
         name: Result list
         created_at: Created
         actions: Actions

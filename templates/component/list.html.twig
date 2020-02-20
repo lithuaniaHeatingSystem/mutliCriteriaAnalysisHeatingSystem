@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}component.list.title{% endtrans %}{% endblock %}
+{% block title %}{{ 'component.list.title'|trans({'%type%': ('component.list.' ~ typeLabel)|trans}) }}{% endblock %}
 
 {% block body %}
     <div class="row">
