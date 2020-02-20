@@ -152,12 +152,6 @@ class AppFixtures extends Fixture
         $manager->persist($maxPressureRangeCriteria);
         $manager->flush();
 
-        $maxPressureCriteria = (new Criteria)->setLabel("Max pressure")->setDescription("Max pressure")->setUnit("Bar");
-        $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($valveType)->setIsPositive(true));
-        $maxPressureCriteria->addCriteriaType((new CriteriaType())->setType($thermostaticValveType)->setIsPositive(true));
-        $manager->persist($maxPressureCriteria);
-        $manager->flush();
-
         $kvsCriteria = (new Criteria)->setLabel("Kvs")->setDescription("Kvs")->setUnit("m3/h");
         $kvsCriteria->addCriteriaType((new CriteriaType())->setType($valveType)->setIsPositive(true));
         $manager->persist($kvsCriteria);
