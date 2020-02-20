@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Component;
+use App\Entity\ComponentCriteria;
 use App\Entity\Criteria;
 use App\Entity\CriteriaType;
 use App\Entity\Type;
@@ -190,6 +191,8 @@ class AppFixtures extends Fixture
 
 
         $altimaVerticalHMComponent = (new Component)->setLabel("Altima Vertical HM-160-030")->setDescription("Smooth surface or worked in relief: ideal in housing (entry, living, room...) as in tertiary character")->setLink("https://acova.fr/radiateur-decoratif-chauffage-central/altima-vertical-38624")->setType($heatingType);
+        //example
+        //$altimaVerticalHMComponent->addComponentCriteria((new ComponentCriteria())->setValue(10)->setCriteria($designCriteria));
         $manager->persist($altimaVerticalHMComponent);
         $manager->flush();
 
