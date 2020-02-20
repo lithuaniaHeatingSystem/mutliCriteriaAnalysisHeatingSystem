@@ -27,6 +27,7 @@ class ComponentFirstType extends AbstractType
                 'required' => false,
                 'class' => Type::class,
                 'label' => 'component.form.type',
+                'disabled' => true,
                 'choice_label' => function ($type) {
                     return 'component.form.'.$type->getLabel();
                 },

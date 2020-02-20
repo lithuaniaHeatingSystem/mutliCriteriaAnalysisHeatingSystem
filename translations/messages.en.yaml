@@ -2,10 +2,10 @@ menu:
     name: Heating system
     component:
         name: Components
-        heating: Heating
+        radiator: Radiator
         pipe: Pipe
         thermostatic_valve: Thermostatic valve
-        differential_valve: Differential valve
+        valve: Differential valve
         circulation_pump: Circulation pump
 
     process: Processing
@@ -41,16 +41,30 @@ component:
         description: Description
         type: Component type
         link: Url
-        heating: Heating
+        radiator: Radiator
         valve: Valve
         pipe: Pipe
         thermostatic_valve: Thermostatic valve
-        circulation_pump: Circulation Pump
+        circulation_pump: Circulation pump
     add:
         criterias: Set value for each criterias
         title: Create component
         next: Next
         validate: Validate
+    edit:
+        title: Edit component
+    list:
+        action:
+            remove: Remove
+            edit: Edit
+            add: Add
+        title: List of %type%
+        radiator: radiators
+        valve: valves
+        pipe: pipes
+        thermostatic_valve: thermostatic valves
+        circulation_pump: circulation pumps
+
 
 processing:
     form:

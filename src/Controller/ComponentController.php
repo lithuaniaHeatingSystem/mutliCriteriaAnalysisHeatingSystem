@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Component;
 use App\Entity\ComponentCriteria;
+use App\Entity\Type;
 use App\Form\ComponentFirstType;
 use App\Form\ComponentSecondType;
 use App\Repository\CriteriaRepository;
@@ -16,15 +17,37 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ComponentController extends AbstractController
 {
+
     /**
-     * @Route("/component/{componentId}", name="create_or_update_component")
+     * @Route("/component-list/{typeLabel}", name="component_list")
+     *
+     * @ParamConverter("type", options={"mapping": {"typeLabel": "label"}})
+     *
+     * @param Type $type
+     *
+     * @return Response
+     */
+    public function listComponent(Type $type)
+    {
+        $components = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type]);
+
+        return $this->render('component/list.html.twig',
+            ['components' => $components, 'typeLabel' => $type->getLabel()]);
+    }
+
+    /**
+     * @Route("/component/{typeLabel}/{componentId}", name="create_or_update_component")
+     *
+     * @ParamConverter("type", options={"mapping": {"typeLabel": "label"}})
      *
      * @param Request  $request
      * @param int|null $componentId
      *
+     * @param Type     $type
+     *
      * @return Response
      */
-    public function createOrUpdateComponent(Request $request, int $componentId = null)
+    public function createOrUpdateComponent(Request $request, Type $type, ?int $componentId = null)
     {
         $component = null;
         if ($componentId !== null) {
@@ -33,7 +56,7 @@ class ComponentController extends AbstractController
         if ($component === null && $componentId !== null) {
             return $this->redirect($this->generateUrl('create_or_update_component', ['componentId' => null]));
         } elseif ($componentId === null && $component === null) {
-            $component = new Component();
+            $component = (new Component())->setType($type);
         }
 
         $form = $this->createForm(ComponentFirstType::class, $component, ['validation_groups' => ['first_step']]);
@@ -48,28 +71,34 @@ class ComponentController extends AbstractController
             $em->flush();
 
             return $this->redirect($this->generateUrl('create_or_update_component_criteria',
-                ['componentId' => $component->getId()]));
+                ['componentId' => $component->getId(), 'typeLabel' => $type->getLabel()]));
         }
 
 
-        return $this->render('component/add_first_step.html.twig', [
+        return $this->render('component/first_step.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/component-criteria/{componentId}", name="create_or_update_component_criteria")
+     * @Route("/component-criteria/{typeLabel}/{componentId}", name="create_or_update_component_criteria")
+     *
      * @ParamConverter("component", options={"id" = "componentId"})
+     * @ParamConverter("type", options={"mapping": {"typeLabel": "label"}})
      *
      * @param Request            $request
      * @param Component          $component
      * @param CriteriaRepository $criteriaRepository
      *
+     * @param Type               $type
+     *
      * @return Response
      */
     public function createOrUpdateComponentCriteria(Request $request,
         Component $component,
-        CriteriaRepository $criteriaRepository)
+        CriteriaRepository $criteriaRepository,
+        Type $type
+    )
     {
         $type = $component->getType();
         $criterias = $criteriaRepository->findByType($type);
@@ -105,31 +134,33 @@ class ComponentController extends AbstractController
             $em->persist($component);
             $em->flush();
 
-            //@TODO redirect to list
-//            return $this->redirect($this->generateUrl('component'));
+            return $this->redirect($this->generateUrl('component_list', ['typeLabel' => $type->getLabel()]));
         }
 
 
-        return $this->render('component/add_second_step.html.twig', [
+        return $this->render('component/second_step.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
     /**
-     * @Route("/component-delete/{id}", name="component_delete")
-     * @ParamConverter("component", class="App\Entity\Component")
+     * @Route("/component-delete/{typeLabel}/{componentId}", name="component_delete")
      *
-     * @param Request  $request
+     * @ParamConverter("component", options={"mapping": {"componentId": "id"}})
+     * @ParamConverter("type", options={"mapping": {"typeLabel": "label"}})
      *
+     * @param Request   $request
      * @param Component $component
+     * @param Type      $type
      *
      * @return Response
      */
-    public function delete(Request $request, Component $component)
+    public function delete(Request $request, Component $component, Type $type)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($component);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('component_list'));
+        return $this->redirect($this->generateUrl('component_list', ['typeLabel' => $type->getLabel()]));
     }
 }
