@@ -27,7 +27,7 @@
                         <th scope="row">{{ result.createdAt|date }}</th>
                         <td>
                             <a href="{{ path('result_show', {'resultId': result.id}) }}"
-                               class="badge badge-secondary">{% trans %}result.list.action.show{% endtrans %}</a>
+                               class="badge badge-primary">{% trans %}result.list.action.show{% endtrans %}</a>
                         </td>
                     </tr>
                 {% endfor %}
