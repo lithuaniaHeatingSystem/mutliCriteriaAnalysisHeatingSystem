@@ -1,6 +1,6 @@
 # What is main of this project
 
- The purpose of this application is to find the best component using the Complex Proportional Assessment of alternatives.
+ The purpose of this application is to find the best component using the Complex Proportional Assessment of alternatives (Multi criteria decision analysis).
 
  First you need to define the components types in the database. This types can be modified and are going to appear in the menu.
 
