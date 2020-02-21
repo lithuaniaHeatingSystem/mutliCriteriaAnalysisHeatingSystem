@@ -18,7 +18,7 @@
 ## Docker is need it for follow directives below 
 ### The first time only :
  - ▶ cp .env-dist to .env (you can custom environment if you want)
- - ▶ docker-compose up -d
+ - ▶ docker-compose up -d (run containers)
  - ▶ docker exec lithuania_project_php composer install (install php dependencies)
  - ▶ docker exec lithuania_project_php php bin/console doctrine:schema:create (create database schema)
  - ▶ docker exec lithuania_project_php php bin/console doctrine:fixtures:load (load fixtures in database)
