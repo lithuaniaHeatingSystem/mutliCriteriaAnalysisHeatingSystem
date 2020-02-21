@@ -1,3 +1,19 @@
+# What is main of this project
+
+ The purpose of this application is to find the best component using the Complex Proportional Assessment of alternatives.
+
+ First you need to define the components types in the database. This types can be modified and are going to appear in the menu.
+
+ Then you can add criterias for each components types. One criteria can be defined positively or negatively and can concerned one or many components types.
+
+ Next you can add components and define the values of each criteria according to its type.
+
+ Lastly you can process the COPRAS by assigning weights for every criteria.
+
+ The application will finally return all the components sorted in ascending order.
+
+ ## This project was carried out in an educational setting with french students (CNAM GRAND EST) and lithuanian students at Vilnius college of technologies and design
+ 
 # How to run this project
 
 ## The first time only :
