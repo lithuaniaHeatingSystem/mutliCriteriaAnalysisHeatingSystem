@@ -12,31 +12,31 @@
 
  The application will finally return all the components sorted in ascending order.
 
- ## This project was carried out in an educational setting with french students (CNAM GRAND EST) and lithuanian students at Vilnius college of technologies and design
+ ## This project was carried out in an educational setting by french students (CNAM Grand-Est) and lithuanian students at Vilnius college of technologies and design
  
 # How to run this project
-
-## The first time only :
- - ▶ cp .env-dist to .env
+## Docker is need it for follow directives below 
+### The first time only :
+ - ▶ cp .env-dist to .env (you can custom environment if you want)
  - ▶ docker-compose up -d
- - ▶ docker exec lithuania_project_php composer install
- - ▶ docker exec lithuania_project_php bin/console doctrine:schema:create
- - ▶ docker exec lithuania_project_php php doctrine:fixtures:load
- - ▶ docker exec lithuania_project_node yarn install --no-bin-links
+ - ▶ docker exec lithuania_project_php composer install (install php dependencies)
+ - ▶ docker exec lithuania_project_php php bin/console doctrine:schema:create (create database schema)
+ - ▶ docker exec lithuania_project_php php bin/console doctrine:fixtures:load (load fixtures in database)
+ - ▶ docker exec lithuania_project_node yarn install --no-bin-links (install front dependencies)
  
-## Every time
- - ▶ docker-compose up -d
- - ▶ docker exec lithuania_project_node yarn watch (if you are error try: docker exec lithuania_project_node yarn add --dev @symfony/webpack-encore)
+### Every time
+ - ▶ docker-compose up -d (run container)
+ - ▶ docker exec lithuania_project_node yarn dev (compile assets)
 
  After that you can go to localhost:8080, enjoy
  
- ## Stop containers
+### Stop containers
  - ▶ docker-compose stop
   
-## Access to symfony console 
+### Access to symfony console 
  - ▶ docker exec lithuania_project_php bin/console
 
-## Access to yarn
+### Access to yarn
  - ▶ docker exec lithuania_project_encore yarn add something
 
 
